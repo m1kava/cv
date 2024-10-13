@@ -1,0 +1,64 @@
+.timeline {
+  padding: 20px;
+  background-color: #212830;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  color: #fff;
+
+  &__title {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+
+  &__item {
+    margin: 20px 0;
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    background-color: #151b23;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  &__date {
+    font-size: 11px;
+    color: #3498db;
+    width: 150px;
+    text-align: right;
+    margin-right: 20px;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    padding-left: 20px;
+    border-left: 2px solid #3498db;
+  }
+
+  &__role {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 10px;
+
+    & a {
+      color: #3498db;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__responsibilities {
+    padding-left: 0;
+  }
+
+  &__responsibility {
+    font-size: 14px;
+    color: #ddd;
+    margin-bottom: 8px;
+  }
+}
