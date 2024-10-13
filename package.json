@@ -4,10 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --output-path docs --base-href /cv/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:cv": "node dist/cv/server/server.mjs"
+    "serve:ssr:cv": "node docs/cv/server/server.mjs"
   },
   "private": true,
   "dependencies": {
