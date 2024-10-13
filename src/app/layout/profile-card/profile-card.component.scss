@@ -1,13 +1,12 @@
 .profile-card {
-  max-width: 350px;
-  background: #ffffff;
+  background-color: #212830;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
   font-family: 'Arial', sans-serif;
 
-  .profile-img {
+  &__img {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -15,52 +14,73 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
 
-  .profile-info {
-    h2 {
-      font-size: 24px;
-      margin-bottom: 5px;
-      color: #333;
+  &__name {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #fff;
+  }
+
+  &__position, &__location {
+    font-size: 14px;
+    color: #aaa;
+    margin: 5px 0;
+  }
+
+  &__link {
+    color: #3498db;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
     }
+  }
 
-    p {
-      font-size: 14px;
-      color: #555;
-      margin: 5px 0;
-    }
+  /* About Me section styles */
+  &__about {
+    margin: 15px 0;
 
-    a {
-      color: #3498db;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    h3 {
-      margin: 15px 0 10px;
+    &-heading {
       font-size: 18px;
-      color: #444;
+      color: #fff;
+      margin-bottom: 10px;
+      text-align: left;
+      margin-top: 20px;
     }
 
-    ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-
-      li {
-        margin: 0 10px;
-      }
+    &-text {
+      font-size: 14px;
+      color: #ddd;
+      text-align: left;
+      line-height: 1.6;
     }
+  }
 
-    .social-links {
-      margin-top: 10px;
+  &__heading {
+    font-size: 18px;
+    color: #fff;
+    text-align: left;
+    margin: 20px 0 10px;
+  }
 
-      a {
-        margin: 0 5px;
-        display: inline-block;
-      }
-    }
+  &__tech-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  &__tech-item {
+
+  }
+
+  &__social-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  &__social-link {
+
   }
 }

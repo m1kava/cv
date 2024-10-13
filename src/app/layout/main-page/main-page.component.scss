@@ -1,0 +1,16 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  height: 100%;
+  padding: 20px;
+}
+
+app-profile-card {
+  flex: 1.1;
+}
+
+app-profile-timeline {
+  flex: 2.5;
+}
