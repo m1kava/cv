@@ -5,6 +5,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
   color: #fff;
+  margin-bottom: 20px;
 
   &__title {
     text-align: center;
@@ -30,6 +31,13 @@
     text-align: right;
     margin-right: 20px;
     flex-shrink: 0;
+
+    @media (max-width: 768px) {
+      width: 0;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      text-align: center;
+    }
   }
 
   &__content {
