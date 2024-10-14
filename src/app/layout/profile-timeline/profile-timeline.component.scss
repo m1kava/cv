@@ -7,6 +7,10 @@
   margin-bottom: 20px;
   font-family: sans-serif;
 
+  @media (max-width: 768px) {
+    height: 100%;
+  }
+
   &__title {
     text-align: center;
     color: #fff;
