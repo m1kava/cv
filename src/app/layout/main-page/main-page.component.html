@@ -1,4 +1,17 @@
+<!-- Navigation only appears on screens <= 768px -->
+<nav class="main-navigation" *ngIf="isSmallScreen">
+  <ul class="main-navigation__ul">
+    <li class="main-navigation__list" [class.active]="activeTab === 'Profile'" (click)="setActiveTab('Profile')">
+      <a>Profile</a>
+    </li>
+    <li class="main-navigation__list" [class.active]="activeTab === 'Timeline'" (click)="setActiveTab('Timeline')">
+      <a>Timeline</a>
+    </li>
+  </ul>
+</nav>
+
 <div class="main-container">
-  <app-profile-card></app-profile-card>
-  <app-profile-timeline></app-profile-timeline>
+  <!-- For small screens: display content based on active tab -->
+  <app-profile-card *ngIf="activeTab === 'Profile' || !isSmallScreen"></app-profile-card>
+  <app-profile-timeline *ngIf="activeTab === 'Timeline' || !isSmallScreen"></app-profile-timeline>
 </div>
