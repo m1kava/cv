@@ -4,7 +4,11 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
-  font-family: 'Arial', sans-serif;
+  font-family: cursive, 'Arial', sans-serif;
+
+  @media (max-width: 768px) {
+    height: 100%;
+  }
 
   &__img {
     width: 150px;
