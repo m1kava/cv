@@ -1,31 +1,49 @@
-<header class="intro">
-  <img class="intro__avatar" [src]="profile.avatar" [alt]="profile.name" width="96" height="96" />
-
-  <h1 class="intro__title">Hi, I'm {{ profile.firstName }} <span class="intro__wave" aria-hidden="true">👋</span></h1>
-  <p class="intro__subtitle">
-    {{ profile.title }} <span aria-hidden="true">·</span>
-    <span class="intro__location"><app-icon name="pin" />{{ profile.location }}</span>
-  </p>
-
-  <div class="intro__bio">
-    <p>
-      I build web apps with Angular and TypeScript. For the last {{ angularYears }}+ years I've been working at
-      <a [href]="profile.company.url" target="_blank" rel="noopener noreferrer">{{ profile.company.name }}</a>,
-      turning designs into fast, reliable interfaces that lots of people use every day.
-    </p>
-    <p>
-      I like clean code, simple solutions and helping teammates grow — reviewing pull requests and mentoring junior
-      developers are some of my favourite parts of the job.
-    </p>
+<section class="hero" id="top" aria-labelledby="hero-name">
+  <div class="hero__avatar">
+    <span class="hero__ring" aria-hidden="true"></span>
+    <img [src]="profile.avatar" [alt]="profile.firstName + ' ' + profile.lastName" width="132" height="132" />
+    <span class="hero__online" aria-hidden="true"></span>
   </div>
 
-  <ul class="intro__links">
+  <p class="hero__badge"><span class="hero__pulse"></span>Available for new opportunities</p>
+
+  <h1 class="hero__name" id="hero-name">
+    <span class="hero__hello">Hello world, I'm</span>
+    {{ profile.firstName }} <span class="gradient-text">{{ profile.lastName }}</span>
+  </h1>
+
+  <p class="hero__typed" aria-live="off">
+    I build <span class="hero__word">{{ typed() }}</span><span class="hero__caret" aria-hidden="true"></span>
+  </p>
+
+  <p class="hero__meta">
+    <span>{{ profile.title }}</span>
+    <span class="hero__sep" aria-hidden="true"></span>
+    <span><app-icon name="pin" /> {{ profile.location }}</span>
+  </p>
+
+  <div class="hero__actions">
+    <a class="btn btn--primary" href="#contact"><app-icon name="send" />Let's talk</a>
+    <a class="btn" href="#experience">View my work</a>
+  </div>
+
+  <ul class="hero__socials" aria-label="Social profiles">
     @for (link of socialLinks; track link.url) {
       <li>
-        <a [href]="link.url" target="_blank" rel="noopener noreferrer">
-          <app-icon [name]="link.icon" />{{ link.label }}
+        <a [href]="link.url" target="_blank" rel="noopener noreferrer" [attr.aria-label]="link.label">
+          <app-icon [name]="link.icon" />
         </a>
       </li>
     }
   </ul>
-</header>
+
+  <a class="hero__scroll" href="#about" aria-label="Scroll to about"><span></span></a>
+</section>
+
+<div class="marquee" aria-label="Tech stack">
+  <ul class="marquee__track">
+    @for (skill of marquee; track $index) {
+      <li [attr.aria-hidden]="$index >= marquee.length / 2">{{ skill }}</li>
+    }
+  </ul>
+</div>
