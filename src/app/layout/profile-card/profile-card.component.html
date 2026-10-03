@@ -1,74 +1,31 @@
-<section class="hero" id="top" aria-labelledby="hero-name">
-  <div class="hero__intro reveal">
-    @if (profile.available) {
-      <p class="hero__status no-print"><span class="hero__pulse"></span>Open to new opportunities</p>
-    }
+<header class="intro">
+  <img class="intro__avatar" [src]="profile.avatar" [alt]="profile.name" width="96" height="96" />
 
-    <p class="hero__kicker">
-      <span>{{ profile.role }}</span>
-      <span class="hero__dot" aria-hidden="true"></span>
-      <span>{{ profile.specialty }}</span>
+  <h1 class="intro__title">Hi, I'm {{ profile.firstName }} <span class="intro__wave" aria-hidden="true">👋</span></h1>
+  <p class="intro__subtitle">
+    {{ profile.title }} <span aria-hidden="true">·</span>
+    <span class="intro__location"><app-icon name="pin" />{{ profile.location }}</span>
+  </p>
+
+  <div class="intro__bio">
+    <p>
+      I build web apps with Angular and TypeScript. For the last {{ angularYears }}+ years I've been working at
+      <a [href]="profile.company.url" target="_blank" rel="noopener noreferrer">{{ profile.company.name }}</a>,
+      turning designs into fast, reliable interfaces that lots of people use every day.
     </p>
-
-    <h1 class="hero__name" id="hero-name">
-      {{ profile.firstName }} <span class="gradient-text">{{ profile.lastName }}</span>
-    </h1>
-
-    <p class="hero__headline">{{ profile.headline }}</p>
-
-    <p class="hero__meta">
-      <span><app-icon name="briefcase" />{{ currentRole.role }} at
-        <a [href]="currentRole.companyUrl" target="_blank" rel="noopener noreferrer">{{ currentRole.company }}</a></span>
-      <span><app-icon name="pin" />{{ profile.location }}</span>
+    <p>
+      I like clean code, simple solutions and helping teammates grow — reviewing pull requests and mentoring junior
+      developers are some of my favourite parts of the job.
     </p>
-
-    <div class="hero__actions no-print">
-      <a class="btn btn--primary" href="#contact"><app-icon name="send" />Get in touch</a>
-      <button class="btn" type="button" (click)="print()"><app-icon name="download" />Download CV</button>
-    </div>
-
-    <ul class="hero__socials" aria-label="Social profiles">
-      @for (link of socialLinks; track link.url) {
-        <li>
-          <a [href]="link.url" target="_blank" rel="noopener noreferrer" [attr.aria-label]="link.label">
-            <app-icon [name]="link.icon" />
-            <span class="print-only">{{ link.url.replace('https://', '') }}</span>
-          </a>
-        </li>
-      }
-    </ul>
   </div>
 
-  <div class="hero__visual no-print reveal" aria-hidden="true">
-    <div class="hero__glow"></div>
-    <div class="editor card">
-      <div class="editor__bar">
-        <span class="editor__dots"><i></i><i></i><i></i></span>
-        <span class="editor__file">engineer.component.ts</span>
-      </div>
-      <pre class="editor__code"><code><span class="t-dec">&#64;Component</span>({{ '{' }}
-  <span class="t-key">selector</span>: <span class="t-str">'app-engineer'</span>,
-  <span class="t-key">standalone</span>: <span class="t-bool">true</span>,
-  <span class="t-key">changeDetection</span>: <span class="t-type">OnPush</span>,
-{{ '}' }})
-<span class="t-kw">export class</span> <span class="t-type">Engineer</span> {{ '{' }}
-  <span class="t-key">name</span> = <span class="t-str">'{{ profile.firstName }} {{ profile.lastName }}'</span>;
-  <span class="t-key">stack</span> = <span class="t-fn">signal</span>([
-    <span class="t-str">'Angular'</span>, <span class="t-str">'TypeScript'</span>,
-    <span class="t-str">'RxJS'</span>, <span class="t-str">'NgRx'</span>,
-  ]);
-  <span class="t-key">focus</span> = <span class="t-str">'clean, scalable UI'</span>;
-{{ '}' }}</code></pre>
-      <img class="editor__avatar" [src]="profile.avatar" [alt]="profile.firstName + ' ' + profile.lastName" width="88" height="88" />
-    </div>
-  </div>
-
-  <dl class="hero__stats">
-    @for (stat of stats; track stat.label) {
-      <div class="hero__stat">
-        <dt>{{ stat.label }}</dt>
-        <dd class="gradient-text">{{ stat.value }}</dd>
-      </div>
+  <ul class="intro__links">
+    @for (link of socialLinks; track link.url) {
+      <li>
+        <a [href]="link.url" target="_blank" rel="noopener noreferrer">
+          <app-icon [name]="link.icon" />{{ link.label }}
+        </a>
+      </li>
     }
-  </dl>
-</section>
+  </ul>
+</header>

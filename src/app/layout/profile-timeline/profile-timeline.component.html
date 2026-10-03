@@ -1,54 +1,22 @@
-<section class="section" id="experience" aria-labelledby="experience-title">
-  <h2 class="section-heading">
-    <span class="section-heading__index">02.</span>
-    <span class="section-heading__title" id="experience-title">Experience</span>
-  </h2>
+<section class="section">
+  <h2 class="section-title">Experience</h2>
 
-  <ol class="timeline">
+  <ul class="jobs">
     @for (job of jobs; track job.company) {
-      <li class="timeline__item" [class.timeline__item--current]="job.current">
-        <span class="timeline__marker" aria-hidden="true"></span>
-
-        <article class="timeline__card card">
-          <header class="timeline__header">
-            <div>
-              <h3 class="timeline__role">{{ job.role }}</h3>
-              <p class="timeline__company">
-                @if (job.companyUrl) {
-                  <a [href]="job.companyUrl" target="_blank" rel="noopener noreferrer">
-                    {{ job.company }} <app-icon name="arrow" />
-                  </a>
-                } @else {
-                  {{ job.company }}
-                }
-                <span class="timeline__type">· {{ job.type }}</span>
-              </p>
-            </div>
-
-            <div class="timeline__when">
-              @if (job.current) {
-                <span class="timeline__badge">Current</span>
-              }
-              <time>{{ job.period }}</time>
-              <span class="timeline__duration">{{ job.duration }} · {{ job.location }}</span>
-            </div>
-          </header>
-
-          <p class="timeline__summary">{{ job.summary }}</p>
-
-          <ul class="timeline__highlights">
-            @for (item of job.highlights; track item) {
-              <li>{{ item }}</li>
+      <li class="job">
+        <div class="job__head">
+          <h3 class="job__role">
+            {{ job.role }} at
+            @if (job.companyUrl) {
+              <a [href]="job.companyUrl" target="_blank" rel="noopener noreferrer">{{ job.company }}</a>
+            } @else {
+              <span>{{ job.company }}</span>
             }
-          </ul>
-
-          <ul class="timeline__stack" aria-label="Technologies used">
-            @for (tech of job.stack; track tech) {
-              <li class="chip">{{ tech }}</li>
-            }
-          </ul>
-        </article>
+          </h3>
+          <span class="job__period">{{ job.period }}</span>
+        </div>
+        <p class="job__description">{{ job.description }}</p>
       </li>
     }
-  </ol>
+  </ul>
 </section>

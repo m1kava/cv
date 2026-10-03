@@ -4,13 +4,7 @@ export type IconName =
   | 'linkedin'
   | 'github'
   | 'telegram'
-  | 'download'
-  | 'arrow'
-  | 'pin'
-  | 'sun'
-  | 'moon'
-  | 'briefcase'
-  | 'send';
+  | 'pin';
 
 @Component({
   selector: 'app-icon',
@@ -27,26 +21,8 @@ export type IconName =
         @case ('telegram') {
           <path fill="currentColor" d="M21.94 4.3 18.7 19.6c-.24 1.08-.88 1.35-1.79.84l-4.94-3.64-2.38 2.3c-.27.26-.49.48-1 .48l.35-5.02 9.14-8.26c.4-.35-.09-.55-.61-.2L6.17 13.2l-4.86-1.52c-1.06-.33-1.08-1.06.22-1.57L20.5 2.8c.88-.33 1.65.2 1.44 1.5Z" />
         }
-        @case ('download') {
-          <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0 5-5m-5 5-5-5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
-        }
-        @case ('arrow') {
-          <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9" />
-        }
         @case ('pin') {
           <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 12-8 12s-8-7-8-12a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="3" /></g>
-        }
-        @case ('sun') {
-          <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></g>
-        }
-        @case ('moon') {
-          <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
-        }
-        @case ('briefcase') {
-          <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" /></g>
-        }
-        @case ('send') {
-          <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m22 2-7 20-4-9-9-4 20-7Zm0 0L11 13" />
         }
       }
     </svg>

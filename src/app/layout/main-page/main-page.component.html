@@ -1,96 +1,27 @@
-<div class="backdrop no-print" aria-hidden="true">
-  <div class="backdrop__grid"></div>
-  <div class="backdrop__orb backdrop__orb--one"></div>
-  <div class="backdrop__orb backdrop__orb--two"></div>
-</div>
-
-<header class="header no-print">
-  <div class="container header__inner">
-    <a class="header__brand" href="#top" aria-label="Back to top">
-      <span class="header__logo">{{ profile.initials }}</span>
-      <span class="header__name">{{ profile.firstName }} {{ profile.lastName }}</span>
-    </a>
-
-    <nav class="header__nav" aria-label="Sections">
-      @for (item of navItems; track item.href) {
-        <a [href]="item.href">{{ item.label }}</a>
-      }
-    </nav>
-
-    <div class="header__actions">
-      <button
-        class="header__icon-btn"
-        type="button"
-        (click)="theme.toggle()"
-        [attr.aria-label]="theme.theme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
-      >
-        <app-icon [name]="theme.theme() === 'dark' ? 'sun' : 'moon'" />
-      </button>
-      <button class="btn header__cv" type="button" (click)="print()">
-        <app-icon name="download" />Resume
-      </button>
-    </div>
-  </div>
-</header>
-
-<main class="container">
+<main class="page">
   <app-profile-card />
-
-  <section class="section" id="about" aria-labelledby="about-title">
-    <h2 class="section-heading">
-      <span class="section-heading__index">01.</span>
-      <span class="section-heading__title" id="about-title">About me</span>
-    </h2>
-
-    <div class="about">
-      <div class="about__text">
-        @for (paragraph of profile.about; track $index) {
-          <p>{{ paragraph }}</p>
-        }
-      </div>
-
-      <ul class="about__facts card">
-        <li><span>Role</span><strong>{{ profile.role }}</strong></li>
-        <li><span>Focus</span><strong>{{ profile.specialty }}</strong></li>
-        <li><span>Based in</span><strong>{{ profile.location }}</strong></li>
-        <li><span>Languages</span><strong>TypeScript · JavaScript</strong></li>
-      </ul>
-    </div>
-  </section>
 
   <app-profile-timeline />
 
-  <app-profile-skills />
-
-  <section class="section contact" id="contact" aria-labelledby="contact-title">
-    <div class="contact__card card">
-      <p class="contact__eyebrow">04. What's next?</p>
-      <h2 class="contact__title" id="contact-title">Let's build something <span class="gradient-text">great</span> together.</h2>
-      <p class="contact__text">
-        I'm open to new opportunities and interesting Angular projects. Whether you have a role in mind or just want to
-        connect — feel free to reach out.
-      </p>
-      <ul class="contact__links">
-        @for (link of socialLinks; track link.url) {
-          <li>
-            <a [href]="link.url" target="_blank" rel="noopener noreferrer">
-              <app-icon [name]="link.icon" />
-              <span>
-                <strong>{{ link.label }}</strong>
-                <small>{{ link.handle }}</small>
-              </span>
-              <app-icon class="contact__arrow" name="arrow" />
-            </a>
-          </li>
-        }
-      </ul>
-    </div>
+  <section class="section">
+    <h2 class="section-title">What I work with</h2>
+    <ul class="skills">
+      @for (skill of skills; track skill) {
+        <li>{{ skill }}</li>
+      }
+    </ul>
   </section>
-</main>
 
-<footer class="footer no-print">
-  <div class="container footer__inner">
-    <span>© {{ year }} {{ profile.firstName }} {{ profile.lastName }}</span>
-    <span>Built with <strong>Angular</strong> · Signals · SCSS</span>
-  </div>
-</footer>
+  <section class="section">
+    <h2 class="section-title">Say hi</h2>
+    <p class="contact">
+      Want to work together or just chat about Angular?
+      @if (telegram) {
+        Drop me a message on <a [href]="telegram.url" target="_blank" rel="noopener noreferrer">Telegram</a> —
+      }
+      I'm always happy to connect.
+    </p>
+  </section>
+
+  <footer class="footer">© {{ year }} {{ profile.name }}</footer>
+</main>
