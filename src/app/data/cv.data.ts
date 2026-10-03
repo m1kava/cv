@@ -1,0 +1,85 @@
+export interface SocialLink {
+  label: string;
+  handle: string;
+  url: string;
+  icon: 'linkedin' | 'github' | 'telegram';
+}
+
+export interface Experience {
+  role: string;
+  company: string;
+  companyUrl?: string;
+  type: string;
+  start: string;
+  end?: string;
+  summary: string;
+  highlights: string[];
+  stack: string[];
+}
+
+export const PROFILE = {
+  firstName: 'Vladimer',
+  lastName: 'Mikava',
+  initials: 'VM',
+  title: 'Software Engineer · Angular Developer',
+  location: 'Tbilisi, Georgia',
+  timeZone: 'Asia/Tbilisi',
+  avatar: 'https://avatars.githubusercontent.com/u/39157290?v=4',
+  company: { name: 'Crocobet', url: 'https://www.crocobet.com' },
+  angularSince: '2021-02',
+  careerSince: '2018-03',
+  /** Phrases cycled by the typing effect in the hero. */
+  taglines: ['Angular apps', 'reactive UIs', 'scalable front-ends', 'pixel-perfect interfaces'],
+  about:
+    "I'm a software engineer who lives in the Angular ecosystem. At Crocobet I build and ship high-traffic web apps, turn designs into fast, polished interfaces, review code and mentor junior developers. I love clean architecture, reactive data flows with RxJS and NgRx, and the small details that make a UI feel great.",
+};
+
+export const SOCIAL_LINKS: SocialLink[] = [
+  { label: 'LinkedIn', handle: 'in/mikava', url: 'https://www.linkedin.com/in/mikava', icon: 'linkedin' },
+  { label: 'GitHub', handle: '@m1kava', url: 'https://github.com/m1kava', icon: 'github' },
+  { label: 'Telegram', handle: '@m1kav4', url: 'https://t.me/m1kav4', icon: 'telegram' },
+];
+
+export const EXPERIENCE: Experience[] = [
+  {
+    role: 'Angular Developer',
+    company: 'Crocobet',
+    companyUrl: 'https://www.crocobet.com',
+    type: 'Full-time',
+    start: '2021-02',
+    summary: 'Building and evolving high-traffic web applications with a focus on performance and a scalable front-end architecture.',
+    highlights: [
+      'Develop and maintain responsive Angular applications.',
+      'Turn designs into polished, performant, user-friendly features.',
+      'Integrate REST APIs and design reactive data flows with RxJS & NgRx.',
+      'Own release versions and smooth deployments to production.',
+      'Mentor junior developers and run code reviews.',
+    ],
+    stack: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'SCSS', 'GitLab'],
+  },
+  {
+    role: 'Front-End Developer',
+    company: 'HobbyStudio',
+    type: 'Full-time',
+    start: '2018-06',
+    end: '2018-12',
+    summary: 'Delivered custom web solutions for a range of client projects.',
+    highlights: [
+      'Built and optimised front-end components with HTML, CSS and JavaScript.',
+      'Worked directly with clients to design and develop custom websites.',
+    ],
+    stack: ['JavaScript', 'HTML5', 'CSS3'],
+  },
+  {
+    role: 'Front-End Web Developer Intern',
+    company: 'Ministry of Education and Science of Georgia',
+    type: 'Internship',
+    start: '2018-03',
+    end: '2018-05',
+    summary: 'Helped develop educational tools and portals for internal use.',
+    highlights: ['Gained hands-on experience with modern web development.'],
+    stack: ['JavaScript', 'HTML5', 'CSS3'],
+  },
+];
+
+export const SKILLS = ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Signals', 'JavaScript', 'HTML5', 'CSS3', 'SCSS', 'REST APIs', 'Git', 'GitLab', 'Jira'];

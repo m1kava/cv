@@ -1,15 +1,49 @@
-<aside class="profile-card" aria-labelledby="profile-name">
-  <div class="profile-card__hero">
-    <div class="profile-card__status"><span></span> Available for new opportunities</div>
-    <div class="profile-card__portrait-wrap"><img src="https://avatars.githubusercontent.com/u/39157290?v=4" alt="Vladimer Mikava" class="profile-card__img" /></div>
-    <p class="profile-card__eyebrow">Front-end engineer</p>
-    <h1 class="profile-card__name" id="profile-name">Vladimer<br />Mikava<span>.</span></h1>
-    <p class="profile-card__position">Angular developer crafting fast, thoughtful digital products.</p>
-    <div class="profile-card__meta"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>Tbilisi, Georgia</span><a href="https://www.crocobet.com" target="_blank" rel="noreferrer">Crocobet ↗</a></div>
+<section class="hero" id="top" aria-labelledby="hero-name">
+  <div class="hero__avatar">
+    <span class="hero__ring" aria-hidden="true"></span>
+    <img [src]="profile.avatar" [alt]="profile.firstName + ' ' + profile.lastName" width="132" height="132" />
+    <span class="hero__online" aria-hidden="true"></span>
   </div>
-  <div class="profile-card__body">
-    <section class="profile-card__about"><p class="section-label">01 / About</p><p class="profile-card__about-text">I build polished, responsive web applications with Angular and TypeScript. I care about the details—from clean architecture and fluid interactions to the last pixel on screen.</p></section>
-    <section><p class="section-label">02 / Toolkit</p><ul class="profile-card__tech-list" aria-label="Technologies"><li class="profile-card__tech-item profile-card__tech-item--featured">Angular</li><li class="profile-card__tech-item">TypeScript</li><li class="profile-card__tech-item">RxJS</li><li class="profile-card__tech-item">NgRx</li><li class="profile-card__tech-item">JavaScript</li><li class="profile-card__tech-item">HTML / CSS</li><li class="profile-card__tech-item">SCSS</li><li class="profile-card__tech-item">Git</li></ul></section>
-    <nav class="profile-card__social-links" aria-label="Social links"><a href="https://www.linkedin.com/in/mikava" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a><a href="https://github.com/m1kava" target="_blank" rel="noreferrer">GitHub <span>↗</span></a><a href="https://t.me/m1kav4" target="_blank" rel="noreferrer">Telegram <span>↗</span></a></nav>
+
+  <p class="hero__badge"><span class="hero__pulse"></span>Available for new opportunities</p>
+
+  <h1 class="hero__name" id="hero-name">
+    <span class="hero__hello">Hello world, I'm</span>
+    {{ profile.firstName }} <span class="gradient-text">{{ profile.lastName }}</span>
+  </h1>
+
+  <p class="hero__typed" aria-live="off">
+    I build <span class="hero__word">{{ typed() }}</span><span class="hero__caret" aria-hidden="true"></span>
+  </p>
+
+  <p class="hero__meta">
+    <span>{{ profile.title }}</span>
+    <span class="hero__sep" aria-hidden="true"></span>
+    <span><app-icon name="pin" /> {{ profile.location }}</span>
+  </p>
+
+  <div class="hero__actions">
+    <a class="btn btn--primary" href="#contact"><app-icon name="send" />Let's talk</a>
+    <a class="btn" href="#experience">View my work</a>
   </div>
-</aside>
+
+  <ul class="hero__socials" aria-label="Social profiles">
+    @for (link of socialLinks; track link.url) {
+      <li>
+        <a [href]="link.url" target="_blank" rel="noopener noreferrer" [attr.aria-label]="link.label">
+          <app-icon [name]="link.icon" />
+        </a>
+      </li>
+    }
+  </ul>
+
+  <a class="hero__scroll" href="#about" aria-label="Scroll to about"><span></span></a>
+</section>
+
+<div class="marquee" aria-label="Tech stack">
+  <ul class="marquee__track">
+    @for (skill of marquee; track $index) {
+      <li [attr.aria-hidden]="$index >= marquee.length / 2">{{ skill }}</li>
+    }
+  </ul>
+</div>

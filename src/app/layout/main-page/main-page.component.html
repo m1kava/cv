@@ -1,1 +1,61 @@
-<div class="page-shell"><div class="ambient ambient--one"></div><div class="ambient ambient--two"></div><div class="main-container"><app-profile-card></app-profile-card><app-profile-timeline></app-profile-timeline></div><p class="page-shell__credit">Designed &amp; built with intention · 2026</p></div>
+<div class="backdrop" aria-hidden="true">
+  <div class="backdrop__aurora backdrop__aurora--cyan"></div>
+  <div class="backdrop__aurora backdrop__aurora--violet"></div>
+  <div class="backdrop__aurora backdrop__aurora--pink"></div>
+  <div class="backdrop__grid"></div>
+</div>
+
+<header class="nav">
+  <div class="nav__inner glass">
+    <a class="nav__logo" href="#top" aria-label="Back to top">
+      <span>&lt;</span>{{ profile.initials }}<span>/&gt;</span>
+    </a>
+    <nav class="nav__links" aria-label="Sections">
+      @for (item of navItems; track item.href) {
+        <a [href]="item.href">{{ item.label }}</a>
+      }
+    </nav>
+    <a class="nav__cta" href="#contact">Hire me</a>
+  </div>
+</header>
+
+<app-profile-card />
+
+<main class="container">
+  <app-profile-about />
+
+  <app-profile-timeline />
+
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="contact glass" appSpotlight appReveal>
+      <p class="eyebrow contact__eyebrow">What's next?</p>
+      <h2 class="contact__title" id="contact-title">
+        Let's build something <span class="gradient-text">awesome</span> together.
+      </h2>
+      <p class="contact__text">
+        I'm open to new opportunities and exciting Angular projects. Got an idea, a role or just want to say hi?
+        My DMs are open.
+      </p>
+
+      <ul class="contact__links">
+        @for (link of socialLinks; track link.url) {
+          <li>
+            <a [href]="link.url" target="_blank" rel="noopener noreferrer">
+              <app-icon [name]="link.icon" />
+              <span>
+                <strong>{{ link.label }}</strong>
+                <small>{{ link.handle }}</small>
+              </span>
+              <app-icon class="contact__arrow" name="arrow" />
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="footer container">
+  <span>© {{ year }} {{ profile.firstName }} {{ profile.lastName }}</span>
+  <span>Crafted with <b class="gradient-text">Angular</b> &amp; a lot of ☕</span>
+</footer>
