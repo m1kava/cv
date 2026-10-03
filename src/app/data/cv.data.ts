@@ -30,8 +30,10 @@ export const PROFILE = {
   careerSince: '2018-03',
   /** Phrases cycled by the typing effect in the hero. */
   taglines: ['Angular apps', 'reactive UIs', 'scalable front-ends', 'pixel-perfect interfaces'],
-  about:
-    "I'm a software engineer who lives in the Angular ecosystem. At Crocobet I build and ship high-traffic web apps, turn designs into fast, polished interfaces, review code and mentor junior developers. I love clean architecture, reactive data flows with RxJS and NgRx, and the small details that make a UI feel great.",
+  about: [
+    "I turn ideas into products people actually enjoy using. Since 2021 I've been shipping features to a high-traffic platform where every millisecond and every pixel counts — and where \"it works on my machine\" is never good enough.",
+    "I care about the result, not just the code: fast pages, smooth releases, happy users and a team that ships with confidence. Give me a hard problem and a deadline — I'll bring the solution, and probably a few ideas you didn't ask for.",
+  ],
 };
 
 export const SOCIAL_LINKS: SocialLink[] = [
