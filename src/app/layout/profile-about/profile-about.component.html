@@ -5,7 +5,9 @@
   <div class="bento">
     <article class="bento__card bento__card--about glass" appSpotlight appReveal>
       <p class="bento__label">// who am i</p>
-      <p class="bento__about">{{ profile.about }}</p>
+      @for (paragraph of profile.about; track $index) {
+        <p class="bento__about">{{ paragraph }}</p>
+      }
     </article>
 
     <article class="bento__card bento__card--stat glass" appSpotlight [appReveal]="80">
