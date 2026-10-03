@@ -1,9 +1,54 @@
-<main class="resume">
-  <header class="resume__header"><div><p class="section-label">Selected experience</p><h2>Work that made<br />an <em>impact.</em></h2></div><div class="resume__mark" aria-hidden="true">VM</div></header>
-  <section class="timeline" aria-label="Professional experience">
-    <article class="timeline__item timeline__item--current"><div class="timeline__rail"><span>2021</span><i></i><span>Now</span></div><div class="timeline__content"><div class="timeline__topline"><span class="timeline__type">Full-time</span><span class="timeline__current">Current role</span></div><h3>Angular Developer</h3><a class="timeline__company" href="https://www.crocobet.com" target="_blank" rel="noreferrer">Crocobet <span>↗</span></a><p>Building and evolving high-traffic product experiences with a focus on performance, quality, and resilient front-end architecture.</p><ul class="timeline__responsibilities"><li>Develop and maintain responsive Angular applications used at scale.</li><li>Turn product and design concepts into polished, accessible interfaces.</li><li>Integrate REST APIs and shape reliable client-side data flows.</li><li>Own release preparation, code reviews, and mentoring for junior developers.</li></ul><div class="timeline__tags"><span>Angular</span><span>TypeScript</span><span>RxJS</span><span>NgRx</span></div></div></article>
-    <article class="timeline__item"><div class="timeline__rail"><span>2018</span><i></i><span>6 mo</span></div><div class="timeline__content"><div class="timeline__topline"><span class="timeline__type">Project work</span></div><h3>Front-End Developer</h3><p class="timeline__company">HobbyStudio</p><p>Created custom web experiences for a range of client projects, translating real business needs into clean and responsive interfaces.</p><div class="timeline__tags"><span>JavaScript</span><span>HTML</span><span>CSS</span></div></div></article>
-    <article class="timeline__item"><div class="timeline__rail"><span>2018</span><i></i><span>3 mo</span></div><div class="timeline__content"><div class="timeline__topline"><span class="timeline__type">Internship</span></div><h3>Front-End Web Developer</h3><p class="timeline__company">Ministry of Education &amp; Science of Georgia</p><p>Contributed to internal educational tools and portals while gaining hands-on experience across the modern web stack.</p><div class="timeline__tags"><span>Web development</span><span>UI</span></div></div></article>
-  </section>
-  <footer class="resume__footer"><span>Have a project in mind?</span><a href="https://t.me/m1kav4" target="_blank" rel="noreferrer">Let’s talk <b>↗</b></a></footer>
-</main>
+<section class="section" id="experience" aria-labelledby="experience-title">
+  <h2 class="section-heading">
+    <span class="section-heading__index">02.</span>
+    <span class="section-heading__title" id="experience-title">Experience</span>
+  </h2>
+
+  <ol class="timeline">
+    @for (job of jobs; track job.company) {
+      <li class="timeline__item" [class.timeline__item--current]="job.current">
+        <span class="timeline__marker" aria-hidden="true"></span>
+
+        <article class="timeline__card card">
+          <header class="timeline__header">
+            <div>
+              <h3 class="timeline__role">{{ job.role }}</h3>
+              <p class="timeline__company">
+                @if (job.companyUrl) {
+                  <a [href]="job.companyUrl" target="_blank" rel="noopener noreferrer">
+                    {{ job.company }} <app-icon name="arrow" />
+                  </a>
+                } @else {
+                  {{ job.company }}
+                }
+                <span class="timeline__type">· {{ job.type }}</span>
+              </p>
+            </div>
+
+            <div class="timeline__when">
+              @if (job.current) {
+                <span class="timeline__badge">Current</span>
+              }
+              <time>{{ job.period }}</time>
+              <span class="timeline__duration">{{ job.duration }} · {{ job.location }}</span>
+            </div>
+          </header>
+
+          <p class="timeline__summary">{{ job.summary }}</p>
+
+          <ul class="timeline__highlights">
+            @for (item of job.highlights; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+
+          <ul class="timeline__stack" aria-label="Technologies used">
+            @for (tech of job.stack; track tech) {
+              <li class="chip">{{ tech }}</li>
+            }
+          </ul>
+        </article>
+      </li>
+    }
+  </ol>
+</section>

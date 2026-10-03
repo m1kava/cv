@@ -1,0 +1,22 @@
+<section class="section" id="skills" aria-labelledby="skills-title">
+  <h2 class="section-heading">
+    <span class="section-heading__index">03.</span>
+    <span class="section-heading__title" id="skills-title">Skills &amp; Toolkit</span>
+  </h2>
+
+  <div class="skills">
+    @for (group of groups; track group.title; let i = $index) {
+      <article class="skills__group card" [class.skills__group--featured]="i === 0">
+        <header>
+          <h3 class="skills__title">{{ group.title }}</h3>
+          <p class="skills__description">{{ group.description }}</p>
+        </header>
+        <ul class="skills__list">
+          @for (skill of group.skills; track skill) {
+            <li class="chip">{{ skill }}</li>
+          }
+        </ul>
+      </article>
+    }
+  </div>
+</section>

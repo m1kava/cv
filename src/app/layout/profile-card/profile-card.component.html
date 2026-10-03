@@ -1,15 +1,74 @@
-<aside class="profile-card" aria-labelledby="profile-name">
-  <div class="profile-card__hero">
-    <div class="profile-card__status"><span></span> Available for new opportunities</div>
-    <div class="profile-card__portrait-wrap"><img src="https://avatars.githubusercontent.com/u/39157290?v=4" alt="Vladimer Mikava" class="profile-card__img" /></div>
-    <p class="profile-card__eyebrow">Front-end engineer</p>
-    <h1 class="profile-card__name" id="profile-name">Vladimer<br />Mikava<span>.</span></h1>
-    <p class="profile-card__position">Angular developer crafting fast, thoughtful digital products.</p>
-    <div class="profile-card__meta"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>Tbilisi, Georgia</span><a href="https://www.crocobet.com" target="_blank" rel="noreferrer">Crocobet ↗</a></div>
+<section class="hero" id="top" aria-labelledby="hero-name">
+  <div class="hero__intro reveal">
+    @if (profile.available) {
+      <p class="hero__status no-print"><span class="hero__pulse"></span>Open to new opportunities</p>
+    }
+
+    <p class="hero__kicker">
+      <span>{{ profile.role }}</span>
+      <span class="hero__dot" aria-hidden="true"></span>
+      <span>{{ profile.specialty }}</span>
+    </p>
+
+    <h1 class="hero__name" id="hero-name">
+      {{ profile.firstName }} <span class="gradient-text">{{ profile.lastName }}</span>
+    </h1>
+
+    <p class="hero__headline">{{ profile.headline }}</p>
+
+    <p class="hero__meta">
+      <span><app-icon name="briefcase" />{{ currentRole.role }} at
+        <a [href]="currentRole.companyUrl" target="_blank" rel="noopener noreferrer">{{ currentRole.company }}</a></span>
+      <span><app-icon name="pin" />{{ profile.location }}</span>
+    </p>
+
+    <div class="hero__actions no-print">
+      <a class="btn btn--primary" href="#contact"><app-icon name="send" />Get in touch</a>
+      <button class="btn" type="button" (click)="print()"><app-icon name="download" />Download CV</button>
+    </div>
+
+    <ul class="hero__socials" aria-label="Social profiles">
+      @for (link of socialLinks; track link.url) {
+        <li>
+          <a [href]="link.url" target="_blank" rel="noopener noreferrer" [attr.aria-label]="link.label">
+            <app-icon [name]="link.icon" />
+            <span class="print-only">{{ link.url.replace('https://', '') }}</span>
+          </a>
+        </li>
+      }
+    </ul>
   </div>
-  <div class="profile-card__body">
-    <section class="profile-card__about"><p class="section-label">01 / About</p><p class="profile-card__about-text">I build polished, responsive web applications with Angular and TypeScript. I care about the details—from clean architecture and fluid interactions to the last pixel on screen.</p></section>
-    <section><p class="section-label">02 / Toolkit</p><ul class="profile-card__tech-list" aria-label="Technologies"><li class="profile-card__tech-item profile-card__tech-item--featured">Angular</li><li class="profile-card__tech-item">TypeScript</li><li class="profile-card__tech-item">RxJS</li><li class="profile-card__tech-item">NgRx</li><li class="profile-card__tech-item">JavaScript</li><li class="profile-card__tech-item">HTML / CSS</li><li class="profile-card__tech-item">SCSS</li><li class="profile-card__tech-item">Git</li></ul></section>
-    <nav class="profile-card__social-links" aria-label="Social links"><a href="https://www.linkedin.com/in/mikava" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a><a href="https://github.com/m1kava" target="_blank" rel="noreferrer">GitHub <span>↗</span></a><a href="https://t.me/m1kav4" target="_blank" rel="noreferrer">Telegram <span>↗</span></a></nav>
+
+  <div class="hero__visual no-print reveal" aria-hidden="true">
+    <div class="hero__glow"></div>
+    <div class="editor card">
+      <div class="editor__bar">
+        <span class="editor__dots"><i></i><i></i><i></i></span>
+        <span class="editor__file">engineer.component.ts</span>
+      </div>
+      <pre class="editor__code"><code><span class="t-dec">&#64;Component</span>({{ '{' }}
+  <span class="t-key">selector</span>: <span class="t-str">'app-engineer'</span>,
+  <span class="t-key">standalone</span>: <span class="t-bool">true</span>,
+  <span class="t-key">changeDetection</span>: <span class="t-type">OnPush</span>,
+{{ '}' }})
+<span class="t-kw">export class</span> <span class="t-type">Engineer</span> {{ '{' }}
+  <span class="t-key">name</span> = <span class="t-str">'{{ profile.firstName }} {{ profile.lastName }}'</span>;
+  <span class="t-key">stack</span> = <span class="t-fn">signal</span>([
+    <span class="t-str">'Angular'</span>, <span class="t-str">'TypeScript'</span>,
+    <span class="t-str">'RxJS'</span>, <span class="t-str">'NgRx'</span>,
+  ]);
+  <span class="t-key">focus</span> = <span class="t-str">'clean, scalable UI'</span>;
+{{ '}' }}</code></pre>
+      <img class="editor__avatar" [src]="profile.avatar" [alt]="profile.firstName + ' ' + profile.lastName" width="88" height="88" />
+    </div>
   </div>
-</aside>
+
+  <dl class="hero__stats">
+    @for (stat of stats; track stat.label) {
+      <div class="hero__stat">
+        <dt>{{ stat.label }}</dt>
+        <dd class="gradient-text">{{ stat.value }}</dd>
+      </div>
+    }
+  </dl>
+</section>
