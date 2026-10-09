@@ -29,6 +29,8 @@
     width: 132px;
     height: 132px;
     margin-bottom: 30px;
+    perspective: 620px;
+    transform-style: preserve-3d;
 
     img {
       position: relative;
@@ -39,6 +41,28 @@
       object-fit: cover;
       background: #111;
     }
+
+    /* Pointer-driven 3D tilt (vars set by appTilt); ring keeps its own spin. */
+    img,
+    .hero__glare {
+      transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+  }
+
+  &__glare {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: radial-gradient(
+      130px circle at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%),
+      rgba(255, 255, 255, 0.55),
+      transparent 58%
+    );
+    opacity: var(--tilt, 0);
+    transition: opacity 0.3s;
+    mix-blend-mode: screen;
+    pointer-events: none;
   }
 
   &__ring {

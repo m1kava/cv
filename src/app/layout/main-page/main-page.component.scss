@@ -4,6 +4,38 @@
   isolation: isolate;
 }
 
+/* Keep every content layer above the fixed starfield canvas (z-index: 0). */
+.nav,
+app-profile-card,
+.container,
+app-skills-helix,
+app-profile-timeline,
+main,
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Reading-progress bar pinned to the very top of the page. */
+.scrollbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 30;
+  pointer-events: none;
+
+  span {
+    display: block;
+    height: 100%;
+    background: var(--gradient);
+    transform-origin: left;
+    transform: scaleX(var(--scroll, 0));
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.8);
+  }
+}
+
 .backdrop {
   position: fixed;
   inset: 0;

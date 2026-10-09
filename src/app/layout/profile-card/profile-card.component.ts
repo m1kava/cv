@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, afterNextRender, inject, signal } from '@angular/core';
 import { PROFILE, SKILLS, SOCIAL_LINKS } from '../../data/cv.data';
 import { IconComponent } from '../../shared/icon.component';
+import { TiltDirective } from '../../shared/tilt.directive';
+import { ParallaxDirective } from '../../shared/parallax.directive';
 
 @Component({
   selector: 'app-profile-card',
   standalone: true,
-  imports: [IconComponent],
+  imports: [IconComponent, TiltDirective, ParallaxDirective],
   templateUrl: './profile-card.component.html',
   styleUrl: './profile-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

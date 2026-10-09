@@ -5,6 +5,10 @@
   <div class="backdrop__grid"></div>
 </div>
 
+<app-starfield />
+
+<div class="scrollbar" aria-hidden="true"><span></span></div>
+
 <header class="nav">
   <div class="nav__inner glass">
     <a class="nav__logo" href="#top" aria-label="Back to top">
@@ -21,10 +25,15 @@
 
 <app-profile-card />
 
-<main class="container">
+<div class="container">
   <app-profile-about />
+</div>
 
-  <app-profile-timeline />
+<app-skills-helix />
+
+<app-profile-timeline />
+
+<main class="container">
 
   <section class="section" id="contact" aria-labelledby="contact-title">
     <div class="contact glass" appSpotlight appReveal>
