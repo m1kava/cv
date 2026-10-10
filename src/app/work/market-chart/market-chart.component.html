@@ -1,0 +1,63 @@
+<app-work-page
+  kicker="Project 03 · Canvas & performance"
+  [title]="page.title"
+  [description]="page.description"
+  [stack]="page.stack"
+  [points]="page.points"
+>
+  <div class="chart glass">
+    <header class="chart__head">
+      <div class="ticker">
+        <strong>NOVA / USD</strong>
+        <span class="price" [class.down]="last().c < last().o">{{ last().c | number: '1.2-2' }}</span>
+        <span class="change" [class.down]="change() < 0">{{ change() >= 0 ? '+' : '' }}{{ change() | number: '1.2-2' }}%</span>
+        <span class="sim">simulated</span>
+      </div>
+      <div class="controls">
+        <div class="seg" role="group" aria-label="Timeframe">
+          @for (tf of timeframes; track tf.factor) {
+            <button type="button" [class.on]="factor() === tf.factor" (click)="setFactor(tf.factor)">{{ tf.label }}</button>
+          }
+        </div>
+        <div class="seg" role="group" aria-label="Indicators">
+          <button type="button" class="ind ind--20" [class.on]="showSma20()" (click)="showSma20.set(!showSma20())">SMA 20</button>
+          <button type="button" class="ind ind--50" [class.on]="showSma50()" (click)="showSma50.set(!showSma50())">SMA 50</button>
+          <button type="button" [class.on]="showVolume()" (click)="showVolume.set(!showVolume())">Volume</button>
+        </div>
+        <div class="seg" role="group" aria-label="View">
+          <button type="button" (click)="zoom(0.8)" aria-label="Zoom in">＋</button>
+          <button type="button" (click)="zoom(1.25)" aria-label="Zoom out">－</button>
+          <button type="button" (click)="pan(visible() / 3)" aria-label="Pan left">←</button>
+          <button type="button" (click)="pan(-visible() / 3)" aria-label="Pan right">→</button>
+          <button type="button" [class.on]="live()" (click)="live.set(!live())">{{ live() ? '❚❚ Pause' : '▶ Play' }}</button>
+        </div>
+      </div>
+    </header>
+
+    <p class="legend">
+      @let c = legend();
+      <span>O <b>{{ c.o | number: '1.2-2' }}</b></span>
+      <span>H <b>{{ c.h | number: '1.2-2' }}</b></span>
+      <span>L <b>{{ c.l | number: '1.2-2' }}</b></span>
+      <span>C <b [class.down]="c.c < c.o">{{ c.c | number: '1.2-2' }}</b></span>
+      <span>Vol <b>{{ c.v | number: '1.0-0' }}</b></span>
+    </p>
+
+    <div class="stage">
+      <canvas
+        #canvas
+        role="img"
+        aria-label="Candlestick chart of simulated NOVA/USD prices"
+        (pointerdown)="onPointerDown($event)"
+        (pointermove)="onPointerMove($event)"
+        (pointerup)="onPointerUp()"
+        (pointercancel)="onPointerUp()"
+        (pointerleave)="hover.set(null)"
+      ></canvas>
+      @if (offset() > 1) {
+        <button type="button" class="golive btn btn--primary" (click)="goLive()">Back to live →</button>
+      }
+    </div>
+    <p class="tip">Scroll to zoom · drag to pan · hover for prices</p>
+  </div>
+</app-work-page>

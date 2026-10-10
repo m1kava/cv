@@ -85,3 +85,40 @@ export const EXPERIENCE: Experience[] = [
 ];
 
 export const SKILLS = ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Signals', 'JavaScript', 'HTML5', 'CSS3', 'SCSS', 'REST APIs', 'Git', 'GitLab', 'Jira'];
+
+export interface Project {
+  name: string;
+  route: string;
+  kicker: string;
+  summary: string;
+  stack: string[];
+  preview: 'odds' | 'board' | 'chart';
+}
+
+/** Demo projects that live on this site (see src/app/work). */
+export const PROJECTS: Project[] = [
+  {
+    name: 'Live Odds Board',
+    route: '/work/live-odds',
+    kicker: 'Real-time',
+    summary: 'In-play betting board on a live RxJS feed — flashing prices, goals that swing markets, and a bet slip that catches every odds change.',
+    stack: ['Signals', 'RxJS', 'OnPush'],
+    preview: 'odds',
+  },
+  {
+    name: 'Signal Task Board',
+    route: '/work/task-board',
+    kicker: 'State management',
+    summary: 'Drag-and-drop Kanban with undo / redo, inline editing, filters, WIP limits and local persistence — all on signals.',
+    stack: ['Signals', 'Drag & Drop', 'Undo / Redo'],
+    preview: 'board',
+  },
+  {
+    name: 'Live Market Chart',
+    route: '/work/market-chart',
+    kicker: 'Canvas & performance',
+    summary: 'Hand-drawn canvas candlestick chart with a live price stream, zoom, pan, crosshair, timeframes and moving averages.',
+    stack: ['Canvas 2D', 'RxJS', 'rAF rendering'],
+    preview: 'chart',
+  },
+];

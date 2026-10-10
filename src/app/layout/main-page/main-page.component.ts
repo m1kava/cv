@@ -8,6 +8,7 @@ import { UniverseComponent } from '../../scene/universe.component';
 import { ProfileAboutComponent } from '../profile-about/profile-about.component';
 import { ProfileCardComponent } from '../profile-card/profile-card.component';
 import { ProfileTimelineComponent } from '../profile-timeline/profile-timeline.component';
+import { ProjectsComponent } from '../projects/projects.component';
 import { SkillsHelixComponent } from '../skills-helix/skills-helix.component';
 
 @Component({
@@ -22,6 +23,7 @@ import { SkillsHelixComponent } from '../skills-helix/skills-helix.component';
     ProfileAboutComponent,
     ProfileTimelineComponent,
     SkillsHelixComponent,
+    ProjectsComponent,
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
@@ -36,6 +38,7 @@ export class MainPageComponent {
     { label: 'About', href: '#about' },
     { label: 'Stack', href: '#skills' },
     { label: 'Experience', href: '#experience' },
+    { label: 'Work', href: '#work' },
     { label: 'Contact', href: '#contact' },
   ];
 

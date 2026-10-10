@@ -1,0 +1,109 @@
+<app-work-page
+  kicker="Project 02 · State management"
+  [title]="page.title"
+  [description]="page.description"
+  [stack]="page.stack"
+  [points]="page.points"
+>
+  <div class="toolbar glass">
+    <input
+      type="search"
+      placeholder="Filter cards…"
+      aria-label="Filter cards"
+      [value]="query()"
+      (input)="query.set($any($event.target).value)"
+    />
+    <div class="tags" role="group" aria-label="Filter by tag">
+      <button type="button" [class.on]="tagFilter() === 'all'" (click)="tagFilter.set('all')">All</button>
+      @for (tag of tags; track tag) {
+        <button type="button" [class]="'tag-' + tag" [class.on]="tagFilter() === tag" (click)="tagFilter.set(tag)">
+          {{ tag }}
+        </button>
+      }
+    </div>
+    <span class="progress">{{ done() }} / {{ total() }} done</span>
+    <button type="button" class="btn btn--small" [disabled]="!store.canUndo()" (click)="store.undo()" title="Undo (Ctrl+Z)">↶ Undo</button>
+    <button type="button" class="btn btn--small" [disabled]="!store.canRedo()" (click)="store.redo()" title="Redo (Ctrl+Shift+Z)">↷ Redo</button>
+    <button type="button" class="btn btn--small" (click)="store.reset()">Reset</button>
+  </div>
+
+  <div class="columns">
+    @for (column of columns; track column.id; let ci = $index) {
+      @let cards = visible().get(column.id)!;
+      @let count = store.byColumn().get(column.id)!.length;
+      <section
+        class="column glass"
+        [class.over]="dropAt()?.column === column.id"
+        [attr.aria-label]="column.title"
+        (dragover)="onDragOver($event, column.id, null)"
+        (drop)="onDrop($event)"
+      >
+        <header class="column__head">
+          <h3>{{ column.title }}</h3>
+          <span [class.over-limit]="column.limit && count > column.limit">
+            {{ count }}{{ column.limit ? ' / ' + column.limit : '' }}
+          </span>
+        </header>
+        @if (column.limit && count > column.limit) {
+          <p class="warn">WIP limit exceeded — finish something first.</p>
+        }
+
+        <ul class="cards">
+          @for (task of cards; track task.id) {
+            <li
+              class="card"
+              [class.dragging]="dragging() === task.id"
+              [class.drop-before]="dropAt()?.before === task.id"
+              draggable="true"
+              (dragstart)="onDragStart($event, task)"
+              (dragend)="onDragEnd()"
+              (dragover)="onDragOver($event, column.id, task.id)"
+            >
+              <span [class]="'badge tag-' + task.tag">{{ task.tag }}</span>
+              @if (editing() === task.id) {
+                <input
+                  #edit
+                  class="card__edit"
+                  [value]="task.title"
+                  aria-label="Edit title"
+                  (keydown.enter)="finishEdit(task, edit.value)"
+                  (keydown.escape)="editing.set(null)"
+                  (blur)="finishEdit(task, edit.value)"
+                  appAutofocus
+                />
+              } @else {
+                <p class="card__title" (dblclick)="editing.set(task.id)">{{ task.title }}</p>
+              }
+              <div class="card__actions">
+                <button type="button" [disabled]="ci === 0" (click)="store.shift(task.id, -1)" aria-label="Move left">←</button>
+                <button type="button" [disabled]="ci === columns.length - 1" (click)="store.shift(task.id, 1)" aria-label="Move right">→</button>
+                <button type="button" (click)="editing.set(task.id)" aria-label="Edit">✎</button>
+                <button type="button" (click)="store.remove(task.id)" aria-label="Delete">🗑</button>
+              </div>
+            </li>
+          } @empty {
+            <li class="placeholder">Drop cards here</li>
+          }
+        </ul>
+
+        @if (addingTo() === column.id) {
+          <form class="add" (submit)="$event.preventDefault(); submitNew(column.id, title)">
+            <input #title placeholder="Task title…" aria-label="New task title" appAutofocus />
+            <div class="add__row">
+              <select aria-label="Tag" [value]="newTag()" (change)="newTag.set($any($event.target).value)">
+                @for (tag of tags; track tag) {
+                  <option [value]="tag">{{ tag }}</option>
+                }
+              </select>
+              <button type="submit" class="btn btn--small btn--primary">Add</button>
+              <button type="button" class="btn btn--small" (click)="addingTo.set(null)">Done</button>
+            </div>
+          </form>
+        } @else {
+          <button type="button" class="add-btn" (click)="addingTo.set(column.id)">+ Add card</button>
+        }
+      </section>
+    }
+  </div>
+  <p class="tip">Tip: drag cards, double-click to rename, Ctrl / ⌘ + Z to undo.</p>
+</app-work-page>
