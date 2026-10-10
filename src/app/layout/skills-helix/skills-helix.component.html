@@ -1,36 +1,21 @@
-<section class="helix" id="skills" aria-labelledby="skills-title" appScrollProgress>
-  <div class="helix__sticky">
-    <div class="helix__intro">
-      <p class="eyebrow" appReveal>The stack</p>
-      <h2 class="title" id="skills-title" appReveal>
-        My toolbox, <span class="gradient-text">in motion.</span>
-      </h2>
-      <p class="helix__lead" [appReveal]="120">
-        Thirteen tools I reach for daily — spiralling like strands of DNA.
+<section class="dna" id="skills" aria-labelledby="skills-title" appScrollProgress>
+  <div class="dna__sticky">
+    <div class="dna__copy">
+      <p class="eyebrow">The stack</p>
+      <h2 class="title" id="skills-title">Written in<br />my <span class="gradient-text">DNA.</span></h2>
+      <p class="dna__lead">
+        The tools I reach for every day — {{ skills.length }} strands of one double helix.
+        <span class="dna__hint">Keep scrolling to fly along it.</span>
+      </p>
+      <p class="dna__counter" aria-hidden="true">
+        <span>{{ core }}</span> core · <span>{{ skills.length - core }}</span> supporting
       </p>
     </div>
 
-    <div class="helix__stage" aria-hidden="true">
-      <div class="helix__rotor">
-        <span class="helix__spine"></span>
-        @for (node of nodes; track node.label) {
-          <span
-            class="helix__node"
-            [class.helix__node--core]="node.core"
-            [style.--a.deg]="node.angle"
-            [style.--y.px]="node.y"
-          >
-            <span class="helix__pip"></span>
-            <span class="helix__label">{{ node.label }}</span>
-          </span>
-        }
-      </div>
-    </div>
-
-    <!-- Accessible, static list for screen readers and reduced-motion users -->
-    <ul class="helix__list">
-      @for (node of nodes; track node.label) {
-        <li class="chip">{{ node.label }}</li>
+    <!-- In the WebGL scene these float on the helix; here they serve screen readers and the no-WebGL fallback. -->
+    <ul class="dna__list">
+      @for (skill of skills; track skill) {
+        <li class="chip">{{ skill }}</li>
       }
     </ul>
   </div>

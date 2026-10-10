@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, afterNextRender, inject } from '@angular/core';
 import { PROFILE, SOCIAL_LINKS } from '../../data/cv.data';
 import { IconComponent } from '../../shared/icon.component';
 import { RevealDirective } from '../../shared/reveal.directive';
 import { SpotlightDirective } from '../../shared/spotlight.directive';
-import { StarfieldComponent } from '../../shared/starfield.component';
+import { startSmoothScroll } from '../../shared/smooth-scroll';
+import { UniverseComponent } from '../../scene/universe.component';
 import { ProfileAboutComponent } from '../profile-about/profile-about.component';
 import { ProfileCardComponent } from '../profile-card/profile-card.component';
 import { ProfileTimelineComponent } from '../profile-timeline/profile-timeline.component';
@@ -16,7 +17,7 @@ import { SkillsHelixComponent } from '../skills-helix/skills-helix.component';
     IconComponent,
     RevealDirective,
     SpotlightDirective,
-    StarfieldComponent,
+    UniverseComponent,
     ProfileCardComponent,
     ProfileAboutComponent,
     ProfileTimelineComponent,
@@ -37,4 +38,12 @@ export class MainPageComponent {
     { label: 'Experience', href: '#experience' },
     { label: 'Contact', href: '#contact' },
   ];
+
+  constructor() {
+    const destroyRef = inject(DestroyRef);
+    afterNextRender(() => {
+      const stop = startSmoothScroll();
+      destroyRef.onDestroy(() => stop?.());
+    });
+  }
 }

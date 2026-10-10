@@ -4,10 +4,10 @@
   isolation: isolate;
 }
 
-/* Keep every content layer above the fixed starfield canvas (z-index: 0). */
+/* Keep every content layer above the fixed WebGL canvas (z-index: 0). */
 .nav,
 app-profile-card,
-.container,
+app-profile-about,
 app-skills-helix,
 app-profile-timeline,
 main,
@@ -34,6 +34,11 @@ main,
     transform: scaleX(var(--scroll, 0));
     box-shadow: 0 0 12px rgba(139, 92, 246, 0.8);
   }
+}
+
+/* The WebGL scene paints its own nebulae, so drop the CSS auroras once it is up. */
+:host-context(html.webgl) .backdrop {
+  display: none;
 }
 
 .backdrop {
@@ -259,6 +264,45 @@ main,
 @keyframes drift {
   to {
     transform: translate(8vw, 6vh) scale(1.15);
+  }
+}
+
+/* Finale: a full-screen stage, card on the left, the ringed planet on the right. */
+.finale {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.finale .section {
+  width: 100%;
+  padding-top: 0;
+}
+
+@media (min-width: 761px) {
+  .finale .contact {
+    max-width: 580px;
+    padding: 56px 44px;
+    text-align: left;
+
+    &__eyebrow {
+      justify-content: flex-start;
+    }
+
+    &__title {
+      margin-left: 0;
+      font-size: clamp(34px, 4.2vw, 52px);
+    }
+
+    &__text {
+      margin-left: 0;
+    }
+
+    &__links {
+      grid-template-columns: 1fr;
+      max-width: none;
+      margin-top: 32px;
+    }
   }
 }
 

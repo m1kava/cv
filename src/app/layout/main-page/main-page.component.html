@@ -5,7 +5,7 @@
   <div class="backdrop__grid"></div>
 </div>
 
-<app-starfield />
+<app-universe />
 
 <div class="scrollbar" aria-hidden="true"><span></span></div>
 
@@ -23,17 +23,15 @@
   </div>
 </header>
 
-<app-profile-card />
+<app-profile-card data-scene="0" />
 
-<div class="container">
-  <app-profile-about />
-</div>
+<app-profile-about data-scene="1" />
 
-<app-skills-helix />
+<app-skills-helix data-scene="2" />
 
-<app-profile-timeline />
+<app-profile-timeline data-scene="3" />
 
-<main class="container">
+<main class="container finale" data-scene="4">
 
   <section class="section" id="contact" aria-labelledby="contact-title">
     <div class="contact glass" appSpotlight appReveal>
