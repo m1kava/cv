@@ -1,8 +1,9 @@
 <section class="hero" id="top" aria-labelledby="hero-name">
-  <div class="hero__avatar">
+  <div class="hero__avatar" [appTilt]="14">
     <span class="hero__ring" aria-hidden="true"></span>
     <img [src]="profile.avatar" [alt]="profile.firstName + ' ' + profile.lastName" width="132" height="132" />
     <span class="hero__online" aria-hidden="true"></span>
+    <span class="hero__glare" aria-hidden="true"></span>
   </div>
 
   <p class="hero__badge"><span class="hero__pulse"></span>Available for new opportunities</p>
@@ -39,11 +40,3 @@
 
   <a class="hero__scroll" href="#about" aria-label="Scroll to about"><span></span></a>
 </section>
-
-<div class="marquee" aria-label="Tech stack">
-  <ul class="marquee__track">
-    @for (skill of marquee; track $index) {
-      <li [attr.aria-hidden]="$index >= marquee.length / 2">{{ skill }}</li>
-    }
-  </ul>
-</div>

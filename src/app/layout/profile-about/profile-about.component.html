@@ -1,59 +1,39 @@
-<section class="section" id="about" aria-labelledby="about-title">
-  <p class="eyebrow" appReveal>About me</p>
-  <h2 class="title" id="about-title" appReveal>Code, craft &amp; <span class="gradient-text">clean UI.</span></h2>
+<section class="astro" id="about" aria-labelledby="about-title" appScrollProgress [style.--n]="beats.length">
+  <div class="astro__sticky">
+    <div class="astro__copy">
+      <p class="eyebrow">About me</p>
+      <h2 class="title" id="about-title">Code, craft &amp; <span class="gradient-text">clean UI.</span></h2>
 
-  <div class="bento">
-    <article class="bento__card bento__card--about glass" appSpotlight appReveal>
-      <p class="bento__label">// who am i</p>
-      @for (paragraph of profile.about; track $index) {
-        <p class="bento__about">{{ paragraph }}</p>
-      }
-    </article>
+      <div class="astro__beats">
+        @for (paragraph of profile.about; track $index) {
+          <p class="astro__beat" [style.--i]="$index">{{ paragraph }}</p>
+        }
 
-    <article class="bento__card bento__card--stat glass" appSpotlight [appReveal]="80">
-      <strong class="gradient-text">{{ angularYears }}+</strong>
-      <span>years with Angular</span>
-    </article>
-
-    <article class="bento__card bento__card--stat glass" appSpotlight [appReveal]="160">
-      <strong class="gradient-text">{{ webYears }}+</strong>
-      <span>years building for the web</span>
-    </article>
-
-    <article class="bento__card bento__card--angular glass" appSpotlight [appReveal]="240">
-      <svg class="bento__logo" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 1.6 2.3 5.1l1.5 12.8L12 22.4l8.2-4.5 1.5-12.8L12 1.6Z" fill="url(#ng)" />
-        <path d="M12 4.2 6 17.6h2.2l1.2-3h5.2l1.2 3H18L12 4.2Zm1.8 8.6h-3.6L12 8.4l1.8 4.4Z" fill="#fff" />
-        <defs>
-          <linearGradient id="ng" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#f43f8e" />
-            <stop offset="1" stop-color="#8b5cf6" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <div>
-        <h3>Angular specialist</h3>
-        <p>Standalone components, signals, RxJS &amp; NgRx — modern Angular, done right.</p>
+        <div class="astro__beat astro__stats" [style.--i]="profile.about.length">
+          <div class="astro__stat glass">
+            <strong class="gradient-text">{{ angularYears }}+</strong>
+            <span>years with Angular</span>
+          </div>
+          <div class="astro__stat glass">
+            <strong class="gradient-text">{{ webYears }}+</strong>
+            <span>years building for the web</span>
+          </div>
+          <a class="astro__stat astro__stat--link glass" [href]="profile.company.url" target="_blank" rel="noopener noreferrer">
+            <small>// currently</small>
+            <span>Angular Developer &#64; {{ profile.company.name }} <app-icon name="arrow" /></span>
+          </a>
+          <div class="astro__stat glass">
+            <small>// local time</small>
+            <span><b class="astro__clock">{{ localTime() || '--:--' }}</b> in {{ profile.location }}</span>
+          </div>
+        </div>
       </div>
-    </article>
+    </div>
 
-    <a
-      class="bento__card bento__card--link glass"
-      [href]="profile.company.url"
-      target="_blank"
-      rel="noopener noreferrer"
-      appSpotlight
-      [appReveal]="80"
-    >
-      <p class="bento__label">// currently</p>
-      <h3>Angular Developer &#64; {{ profile.company.name }}</h3>
-      <app-icon class="bento__arrow" name="arrow" />
-    </a>
-
-    <article class="bento__card bento__card--time glass" appSpotlight [appReveal]="160">
-      <p class="bento__label">// local time</p>
-      <h3><span class="bento__clock">{{ localTime() || '--:--' }}</span> in {{ profile.location }}</h3>
-      <span class="bento__globe" aria-hidden="true"></span>
-    </article>
+    <ol class="astro__dots" aria-hidden="true">
+      @for (n of beats; track n) {
+        <li [style.--i]="n"></li>
+      }
+    </ol>
   </div>
 </section>

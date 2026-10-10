@@ -1,0 +1,98 @@
+:host {
+  display: block;
+}
+
+.dna {
+  position: relative;
+  /* Tall track so the camera has room to fly the length of the helix. */
+  min-height: 320vh;
+}
+
+.dna__sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 90px 24px 48px;
+}
+
+.dna__copy {
+  width: min(420px, 100%);
+
+  .title {
+    margin-bottom: 22px;
+  }
+}
+
+.dna__lead {
+  margin: 0 0 22px;
+  color: var(--text-muted);
+  font-size: 17px;
+}
+
+.dna__counter {
+  margin: 0;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  span {
+    color: var(--cyan);
+  }
+}
+
+/* Visually hidden while the 3D labels are on screen. */
+.dna__list {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  list-style: none;
+}
+
+@media (max-width: 760px) {
+  .dna__sticky {
+    align-items: flex-start;
+  }
+}
+
+/* No WebGL (or reduced motion): a plain, readable chip cloud instead. */
+:host-context(html.no-webgl) {
+  .dna {
+    min-height: 0;
+  }
+
+  .dna__sticky {
+    position: static;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    height: auto;
+    padding-top: 110px;
+  }
+
+  .dna__hint {
+    display: none;
+  }
+
+  .dna__list {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+  }
+}

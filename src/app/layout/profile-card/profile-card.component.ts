@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, afterNextRender, inject, signal } from '@angular/core';
-import { PROFILE, SKILLS, SOCIAL_LINKS } from '../../data/cv.data';
+import { PROFILE, SOCIAL_LINKS } from '../../data/cv.data';
 import { IconComponent } from '../../shared/icon.component';
+import { TiltDirective } from '../../shared/tilt.directive';
 
 @Component({
   selector: 'app-profile-card',
   standalone: true,
-  imports: [IconComponent],
+  imports: [IconComponent, TiltDirective],
   templateUrl: './profile-card.component.html',
   styleUrl: './profile-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -13,8 +14,6 @@ import { IconComponent } from '../../shared/icon.component';
 export class ProfileCardComponent {
   readonly profile = PROFILE;
   readonly socialLinks = SOCIAL_LINKS;
-  /** Duplicated so the marquee can loop seamlessly. */
-  readonly marquee = [...SKILLS, ...SKILLS];
   readonly typed = signal(PROFILE.taglines[0]);
 
   constructor() {

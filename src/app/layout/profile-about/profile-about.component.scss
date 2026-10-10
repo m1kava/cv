@@ -2,167 +2,186 @@
   display: block;
 }
 
-.bento {
+.astro {
+  position: relative;
+  /* Tall track: the copy stays pinned while the camera orbits the astronaut. */
+  min-height: 340vh;
+}
+
+.astro__sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 90px 24px 48px;
+}
+
+.astro__copy {
+  width: min(540px, 100%);
+
+  .title {
+    margin-bottom: 30px;
+  }
+}
+
+.astro__beats {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+}
 
-  &__card {
-    overflow: hidden;
-    padding: 28px;
-    text-decoration: none;
-    transition: transform 0.3s, border-color 0.3s;
+/*
+ * Each beat owns a slice of the pinned scroll. --x is its distance from the
+ * current scroll position (0 = centred), --d the absolute distance. Beats
+ * fade, drift and blur in and out around their slice — no JS needed.
+ */
+.astro__beat,
+.astro__dots li {
+  --x: calc(var(--pin, 0) * (var(--n, 3) - 1) - var(--i));
+  --d: max(var(--x), calc(var(--x) * -1));
+  --on: clamp(0, calc(1.8 - var(--d) * 3.2), 1);
+}
 
-    &:hover {
-      transform: translateY(-4px);
-    }
+.astro__beat {
+  grid-area: 1 / 1;
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(18px, 1.9vw, 22px);
+  line-height: 1.65;
+  opacity: var(--on);
+  transform: translateY(calc(var(--x) * -80px));
+  filter: blur(calc((1 - var(--on)) * 8px));
+}
 
-    h3 {
-      position: relative;
-      z-index: 1;
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
+.astro__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
 
-    p {
-      position: relative;
-      z-index: 1;
-    }
+.astro__stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-height: 112px;
+  padding: 18px 20px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 15px;
+  line-height: 1.4;
 
-    &--about {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-
-    &--stat {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      min-height: 170px;
-
-      strong {
-        font-family: var(--font-display);
-        font-size: clamp(48px, 6vw, 68px);
-        font-weight: 700;
-        line-height: 1;
-        letter-spacing: -0.04em;
-      }
-
-      span {
-        margin-top: 8px;
-        color: var(--text-muted);
-        font-size: 14px;
-      }
-    }
-
-    &--angular {
-      grid-column: span 2;
-      display: flex;
-      align-items: center;
-      gap: 22px;
-
-      p {
-        margin: 6px 0 0;
-        color: var(--text-muted);
-        font-size: 14px;
-      }
-    }
-
-    &--link,
-    &--time {
-      grid-column: span 2;
-    }
+  strong {
+    font-family: var(--font-display);
+    font-size: 44px;
+    line-height: 1;
   }
 
-  &__label {
-    margin: 0 0 14px;
-    color: var(--text-dim);
+  span {
+    color: var(--text-muted);
+  }
+
+  small {
+    color: var(--cyan);
     font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  app-icon {
     font-size: 13px;
   }
+}
 
-  &__about {
-    margin: 0;
+.astro__stat--link {
+  transition: border-color 0.25s;
 
-    & + & {
-      margin-top: 16px;
-    }
-
+  span {
     color: var(--text);
-    font-size: clamp(17px, 1.8vw, 19px);
-    line-height: 1.8;
   }
 
-  &__logo {
-    flex-shrink: 0;
-    width: 64px;
-    height: 64px;
-    filter: drop-shadow(0 8px 24px rgba(244, 63, 142, 0.45));
-  }
-
-  &__arrow {
-    position: absolute;
-    top: 26px;
-    right: 26px;
-    color: var(--text-dim);
-    font-size: 22px;
-    transition: color 0.3s, transform 0.3s;
-  }
-
-  &__card--link:hover &__arrow {
-    color: var(--cyan);
-    transform: translate(3px, -3px);
-  }
-
-  &__clock {
-    color: var(--cyan);
-    font-family: var(--font-mono);
-    font-variant-numeric: tabular-nums;
-  }
-
-  &__globe {
-    position: absolute;
-    right: -40px;
-    bottom: -70px;
-    width: 160px;
-    height: 160px;
-    border: 1px solid rgba(34, 211, 238, 0.25);
-    border-radius: 50%;
-    background:
-      repeating-linear-gradient(90deg, transparent 0 18px, rgba(34, 211, 238, 0.12) 18px 19px),
-      repeating-linear-gradient(0deg, transparent 0 18px, rgba(34, 211, 238, 0.12) 18px 19px);
-    box-shadow: inset 0 0 40px rgba(34, 211, 238, 0.15);
+  &:hover {
+    border-color: var(--cyan);
   }
 }
 
-@media (max-width: 860px) {
-  .bento {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+.astro__clock {
+  color: var(--text);
+  font-family: var(--font-mono);
+}
 
-    &__card--about,
-    &__card--angular,
-    &__card--link,
-    &__card--time {
-      grid-column: 1 / -1;
-      grid-row: auto;
-    }
+.astro__dots {
+  position: absolute;
+  left: 24px;
+  bottom: 40px;
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    width: calc(10px + var(--on) * 26px);
+    height: 4px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, calc(0.18 + var(--on) * 0.82));
   }
 }
 
-@media (max-width: 480px) {
-  .bento__card {
-    padding: 22px;
+@media (max-width: 760px) {
+  .astro__sticky {
+    align-items: flex-end;
+    padding-bottom: 72px;
+  }
 
-    &--stat {
-      min-height: 140px;
-    }
+  /* Scrim so the copy stays legible over the astronaut on narrow screens. */
+  .astro__copy {
+    margin: 0 -24px;
+    padding: 90px 24px 0;
+    background: linear-gradient(transparent, rgba(5, 6, 10, 0.86) 34%);
+  }
 
-    &--angular {
-      flex-direction: column;
-      align-items: flex-start;
+  .astro__stats {
+    gap: 10px;
+  }
+
+  .astro__stat {
+    min-height: 92px;
+    padding: 14px;
+
+    strong {
+      font-size: 34px;
     }
+  }
+
+  .astro__dots {
+    bottom: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .astro {
+    min-height: 0;
+  }
+
+  .astro__sticky {
+    position: static;
+    height: auto;
+    padding-top: 110px;
+  }
+
+  .astro__beats {
+    gap: 22px;
+  }
+
+  .astro__beat {
+    grid-area: auto;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .astro__dots {
+    display: none;
   }
 }

@@ -1,0 +1,22 @@
+<section class="dna" id="skills" aria-labelledby="skills-title" appScrollProgress>
+  <div class="dna__sticky">
+    <div class="dna__copy">
+      <p class="eyebrow">The stack</p>
+      <h2 class="title" id="skills-title">Written in<br />my <span class="gradient-text">DNA.</span></h2>
+      <p class="dna__lead">
+        The tools I reach for every day — {{ skills.length }} strands of one double helix.
+        <span class="dna__hint">Keep scrolling to fly along it.</span>
+      </p>
+      <p class="dna__counter" aria-hidden="true">
+        <span>{{ core }}</span> core · <span>{{ skills.length - core }}</span> supporting
+      </p>
+    </div>
+
+    <!-- In the WebGL scene these float on the helix; here they serve screen readers and the no-WebGL fallback. -->
+    <ul class="dna__list">
+      @for (skill of skills; track skill) {
+        <li class="chip">{{ skill }}</li>
+      }
+    </ul>
+  </div>
+</section>
