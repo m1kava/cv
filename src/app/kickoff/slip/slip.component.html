@@ -1,0 +1,100 @@
+<section class="slip">
+  <header class="head">
+    <h2>{{ t('slip.title') }} <span>{{ slip.selections().length }}</span></h2>
+    @if (slip.selections().length) {
+      <button type="button" class="link" (click)="slip.clear()">{{ t('slip.clear') }}</button>
+    }
+    <button type="button" class="close" aria-label="Close" (click)="slip.open.set(false)">✕</button>
+  </header>
+
+  @if (slip.selections().length > 1) {
+    <div class="modes" role="radiogroup" [attr.aria-label]="t('slip.title')">
+      <button type="button" role="radio" [attr.aria-checked]="slip.mode() === 'single'" [class.on]="slip.mode() === 'single'" (click)="slip.mode.set('single')">
+        {{ t('slip.single') }}
+      </button>
+      <button type="button" role="radio" [attr.aria-checked]="slip.mode() === 'acca'" [class.on]="slip.mode() === 'acca'" (click)="slip.mode.set('acca')">
+        {{ t('slip.acca') }}
+      </button>
+    </div>
+  }
+
+  <ul class="lines">
+    @for (row of rows(); track row.key) {
+      <li class="line" [class.changed]="row.changed" [class.dead]="row.unavailable">
+        <div class="line__text">
+          <strong>{{ row.pick }}</strong>
+          <small>{{ row.market }}</small>
+          <small class="line__match">{{ row.matchLabel }}</small>
+        </div>
+        <div class="line__odds">
+          @if (row.changed) {
+            <s>{{ row.oldOdds }}</s>
+            <span [class.up]="row.up" [class.down]="!row.up">{{ row.shownOdds }}</span>
+          } @else if (row.unavailable) {
+            <span>🔒</span>
+          } @else {
+            <span>{{ row.shownOdds }}</span>
+          }
+        </div>
+        <button type="button" class="x" aria-label="Remove" (click)="slip.remove(row.key)">✕</button>
+      </li>
+    } @empty {
+      <li class="empty">
+        <span aria-hidden="true">🎟</span>
+        {{ t('slip.empty') }}
+      </li>
+    }
+  </ul>
+
+  @if (slip.selections().length) {
+    <div class="stake">
+      <label>
+        {{ slip.mode() === 'single' && slip.selections().length > 1 ? t('slip.stakeEach') : t('slip.stake') }}
+        <span class="input">
+          ₾
+          <input
+            type="number"
+            inputmode="decimal"
+            min="1"
+            max="5000"
+            step="1"
+            [value]="slip.stake()"
+            (input)="slip.setStake(+$any($event.target).value)"
+          />
+        </span>
+      </label>
+      <div class="quick">
+        @for (q of quick; track q) {
+          <button type="button" [class.on]="slip.stake() === q" (click)="slip.setStake(q)">₾{{ q }}</button>
+        }
+      </div>
+    </div>
+
+    <dl class="totals">
+      @if (slip.mode() === 'acca' && slip.selections().length > 1) {
+        <dt>{{ t('slip.totalOdds') }}</dt>
+        <dd>{{ totalOddsLabel() }}</dd>
+      }
+      <dt>{{ t('slip.totalStake') }}</dt>
+      <dd>₾ {{ slip.totalStake() | number: '1.2-2' }}</dd>
+      <dt>{{ t('slip.return') }}</dt>
+      <dd class="win">₾ {{ slip.potentialReturn() | number: '1.2-2' }}</dd>
+    </dl>
+
+    @if (message(); as msg) {
+      <p class="msg">{{ msg }}</p>
+    }
+
+    @if (slip.anyChanged() && !slip.problem()) {
+      <button type="button" class="btn-k btn-k--ghost" (click)="slip.acceptChanges()">{{ t('slip.accept') }}</button>
+    }
+
+    @if (auth.loggedIn()) {
+      <button type="button" class="btn-k" [disabled]="!!slip.problem()" (click)="place()">
+        {{ slip.betCount() > 1 ? t('slip.placeN', { n: slip.betCount() }) : t('slip.place') }}
+      </button>
+    } @else {
+      <button type="button" class="btn-k" (click)="place()">{{ t('auth.required') }}</button>
+    }
+  }
+</section>

@@ -1,0 +1,62 @@
+<div class="banner">
+  <span>{{ t('banner') }}</span>
+  <a routerLink="/work">← {{ t('nav.portfolio') }}</a>
+</div>
+
+<header class="bar">
+  <a class="logo" routerLink="/kickoff" aria-label="Kickoff home">kick<b>off</b><i></i></a>
+
+  <nav class="nav" aria-label="Main">
+    <a routerLink="/kickoff" routerLinkActive="on" [routerLinkActiveOptions]="{ exact: true }">{{ t('nav.sports') }}</a>
+    <a routerLink="/kickoff/bets" routerLinkActive="on">
+      {{ t('nav.bets') }}
+      @if (bets.open().length) {
+        <span class="count">{{ bets.open().length }}</span>
+      }
+    </a>
+    <a routerLink="/kickoff/wallet" routerLinkActive="on">{{ t('nav.wallet') }}</a>
+  </nav>
+
+  <div class="right">
+    <button type="button" class="lang" (click)="toggleLang()" [attr.aria-label]="t('settings.language')">
+      {{ settings.lang() === 'en' ? 'ქარ' : 'EN' }}
+    </button>
+    <a class="icon" routerLink="/kickoff/settings" [attr.aria-label]="t('nav.settings')" routerLinkActive="on">⚙</a>
+    @if (auth.user(); as user) {
+      <a class="balance" routerLink="/kickoff/wallet">₾ {{ wallet.balance() | number: '1.2-2' }}</a>
+      <button type="button" class="avatar" (click)="logout()" [title]="t('auth.logout') + ' · ' + user.name">
+        {{ auth.initials() }}
+      </button>
+    } @else {
+      <a class="login" routerLink="/kickoff/login">{{ t('auth.login') }}</a>
+    }
+  </div>
+</header>
+
+<div class="layout">
+  <main class="main">
+    <router-outlet />
+  </main>
+  <aside class="slip-col" [class.open]="slip.open()" [attr.aria-label]="t('slip.title')">
+    <ko-slip />
+  </aside>
+</div>
+
+@if (slip.open()) {
+  <button type="button" class="scrim" aria-label="Close" (click)="slip.open.set(false)"></button>
+}
+
+<nav class="tabs" aria-label="Main">
+  <a routerLink="/kickoff" routerLinkActive="on" [routerLinkActiveOptions]="{ exact: true }"><span>⚽</span>{{ t('nav.sports') }}</a>
+  <a routerLink="/kickoff/bets" routerLinkActive="on"><span>🎟</span>{{ t('nav.bets') }}</a>
+  <a routerLink="/kickoff/wallet" routerLinkActive="on"><span>👛</span>{{ t('nav.wallet') }}</a>
+  <button type="button" (click)="slip.open.set(true)" [attr.aria-label]="t('slip.open')">
+    <span class="slip-count">{{ slip.selections().length }}</span>{{ t('slip.title') }}
+  </button>
+</nav>
+
+<div class="toasts" aria-live="polite">
+  @for (item of toast.toasts(); track item.id) {
+    <p [class]="'toast toast--' + item.kind" (click)="toast.dismiss(item.id)">{{ item.text }}</p>
+  }
+</div>

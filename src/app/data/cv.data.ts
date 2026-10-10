@@ -128,8 +128,17 @@ export interface Project {
   preview: 'odds' | 'board' | 'chart';
 }
 
-/** Demo projects that live on this site (see src/app/work). */
+/** Demo projects that live on this site (see src/app/work and src/app/kickoff). */
 export const PROJECTS: Project[] = [
+  {
+    name: 'Kickoff Sportsbook',
+    route: '/kickoff',
+    kicker: 'Flagship · full app',
+    summary:
+      'A complete football betting app: live matches priced by a Poisson model, match centre with stats & timeline, singles and accumulators, live cash-out, auto-settlement, wallet, login, and English / Georgian.',
+    stack: ['Signals', 'RxJS', 'Lazy routes', 'i18n', 'Unit tests'],
+    preview: 'odds',
+  },
   {
     name: 'Live Odds Board',
     route: '/work/live-odds',

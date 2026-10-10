@@ -1,0 +1,58 @@
+<h1 class="title">{{ t('nav.wallet') }}</h1>
+
+@if (auth.loggedIn()) {
+  <section class="cards">
+    <div class="card card--main">
+      <small>{{ t('wallet.balance') }}</small>
+      <strong>₾ {{ wallet.balance() | number: '1.2-2' }}</strong>
+      <p>{{ t('wallet.note') }}</p>
+    </div>
+    <div class="card">
+      <small>{{ t('wallet.inPlay') }}</small>
+      <strong>₾ {{ bets.inPlay() | number: '1.2-2' }}</strong>
+    </div>
+    <div class="card">
+      <small>{{ t('wallet.profit') }}</small>
+      <strong [class.up]="profit() > 0" [class.down]="profit() < 0">
+        {{ profit() >= 0 ? '+' : '−' }}₾ {{ (profit() < 0 ? -profit() : profit()) | number: '1.2-2' }}
+      </strong>
+    </div>
+  </section>
+
+  <section class="move">
+    <label>
+      {{ t('wallet.amount') }}
+      <input type="number" min="1" max="10000" [value]="amount()" (input)="setAmount(+$any($event.target).value)" />
+    </label>
+    <div class="quick">
+      @for (q of quick; track q) {
+        <button type="button" [class.on]="amount() === q" (click)="setAmount(q)">₾{{ q }}</button>
+      }
+    </div>
+    <div class="actions">
+      <button type="button" class="primary" (click)="deposit()">{{ t('wallet.deposit') }}</button>
+      <button type="button" (click)="withdraw()">{{ t('wallet.withdraw') }}</button>
+    </div>
+  </section>
+
+  <section class="history">
+    <h2>{{ t('wallet.history') }}</h2>
+    <ul>
+      @for (tx of wallet.transactions(); track tx.id) {
+        <li>
+          <span class="kind" [class]="'kind kind--' + tx.kind">{{ t('tx.' + tx.kind) }}</span>
+          <span class="note">
+            {{ tx.note === 'demo' ? t('wallet.note') : (tx.note ?? '') }}
+            <small>{{ tx.at | date: 'MMM d, HH:mm:ss' }}</small>
+          </span>
+          <b [class.up]="tx.amount > 0">{{ tx.amount > 0 ? '+' : '−' }}₾{{ (tx.amount < 0 ? -tx.amount : tx.amount) | number: '1.2-2' }}</b>
+          <small class="bal">₾{{ tx.balance | number: '1.2-2' }}</small>
+        </li>
+      } @empty {
+        <li class="empty">{{ t('wallet.empty') }}</li>
+      }
+    </ul>
+  </section>
+} @else {
+  <ko-login-prompt />
+}

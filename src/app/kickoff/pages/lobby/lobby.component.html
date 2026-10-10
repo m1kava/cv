@@ -1,0 +1,37 @@
+<section class="hero">
+  <div>
+    <p class="kicker"><i></i>{{ feed.live().length }} {{ t('lobby.live').toLowerCase() }}</p>
+    <h1>{{ t('lobby.football') }}</h1>
+  </div>
+  <input
+    class="search"
+    type="search"
+    [placeholder]="t('lobby.search')"
+    [attr.aria-label]="t('lobby.search')"
+    [value]="query()"
+    (input)="query.set($any($event.target).value)"
+  />
+</section>
+
+<nav class="leagues" aria-label="Leagues">
+  <button type="button" [class.on]="league() === 'all'" (click)="league.set('all')">{{ t('lobby.allLeagues') }}</button>
+  @for (l of leagues(); track l.name) {
+    <button type="button" [class.on]="league() === l.name" (click)="league.set(l.name)">
+      {{ l.name }} <span>{{ l.count }}</span>
+    </button>
+  }
+</nav>
+
+@for (section of sections(); track section.id) {
+  <section class="block" [attr.aria-label]="section.title">
+    <header class="block__head">
+      <h2 [class.live]="section.id === 'live'">{{ section.title }} <span>{{ section.matches.length }}</span></h2>
+      <span class="cols" aria-hidden="true"><span>1</span><span>X</span><span>2</span></span>
+    </header>
+    @for (match of section.matches; track match.id) {
+      <ko-match-row [match]="match" />
+    }
+  </section>
+} @empty {
+  <p class="empty">{{ t('lobby.empty') }}</p>
+}

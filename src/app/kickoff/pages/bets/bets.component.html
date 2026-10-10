@@ -1,0 +1,60 @@
+<h1 class="title">{{ t('nav.bets') }}</h1>
+
+@if (auth.loggedIn()) {
+  <div class="tabs" role="tablist">
+    <button type="button" role="tab" [attr.aria-selected]="tab() === 'open'" [class.on]="tab() === 'open'" (click)="tab.set('open')">
+      {{ t('bets.open') }} <span>{{ bets.open().length }}</span>
+    </button>
+    <button type="button" role="tab" [attr.aria-selected]="tab() === 'settled'" [class.on]="tab() === 'settled'" (click)="tab.set('settled')">
+      {{ t('bets.settled') }} <span>{{ bets.settled().length }}</span>
+    </button>
+  </div>
+
+  <ul class="list">
+    @for (bet of list(); track bet.id) {
+      <li class="bet" [class]="'bet bet--' + bet.status">
+        <header class="bet__head">
+          <div>
+            <strong>{{ title(bet) }}</strong>
+            <small>{{ bet.placedAt | date: 'MMM d, HH:mm' }}</small>
+          </div>
+          <span class="pill">{{ t('bets.status.' + bet.status) }}</span>
+        </header>
+
+        <ol class="legs">
+          @for (leg of bet.legs; track leg.key) {
+            <li [class]="'leg leg--' + leg.status">
+              <span class="leg__dot" aria-hidden="true"></span>
+              <div>
+                <p>{{ pick(leg) }}</p>
+                <small>{{ leg.matchLabel }}</small>
+              </div>
+              <b>{{ odds(leg.odds) }}</b>
+            </li>
+          }
+        </ol>
+
+        <dl class="nums">
+          <div><dt>{{ t('bets.stake') }}</dt><dd>₾{{ bet.stake | number: '1.2-2' }}</dd></div>
+          <div><dt>{{ t('bets.odds') }}</dt><dd>{{ odds(bet.odds) }}</dd></div>
+          @if (bet.status === 'open') {
+            <div><dt>{{ t('bets.potential') }}</dt><dd>₾{{ bet.stake * bet.odds | number: '1.2-2' }}</dd></div>
+          } @else {
+            <div><dt>{{ t('bets.payout') }}</dt><dd [class.win]="bet.payout > bet.stake">₾{{ bet.payout | number: '1.2-2' }}</dd></div>
+          }
+        </dl>
+
+        @if (bet.status === 'open') {
+          @let value = bets.cashOut().get(bet.id);
+          <button type="button" class="cash" [disabled]="value == null" (click)="cashOut(bet)">
+            {{ value == null ? t('bets.cashoutNA') : t('bets.cashout', { v: (value | number: '1.2-2') ?? '' }) }}
+          </button>
+        }
+      </li>
+    } @empty {
+      <li class="empty">{{ t('bets.empty') }}</li>
+    }
+  </ul>
+} @else {
+  <ko-login-prompt />
+}

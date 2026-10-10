@@ -43,6 +43,24 @@
   }
 }
 
+/* The flagship demo (first card) spans the row: preview left, copy right. */
+.grid .card:first-child {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  column-gap: 32px;
+  align-content: center;
+
+  app-work-preview {
+    grid-row: 1 / span 6;
+    align-self: center;
+  }
+
+  h3 {
+    font-size: 30px;
+  }
+}
+
 .card__kicker {
   margin: 18px 0 6px;
   color: var(--cyan);
@@ -165,8 +183,13 @@
 
 @media (max-width: 900px) {
   .grid,
-  .client {
+  .client,
+  .grid .card:first-child {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .grid .card:first-child app-work-preview {
+    grid-row: auto;
   }
 
   .client {
