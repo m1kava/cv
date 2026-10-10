@@ -1,0 +1,91 @@
+<header class="top">
+  <a class="top__back" routerLink="/work"><span aria-hidden="true">←</span> All work</a>
+  <a class="top__home" routerLink="/">Portfolio home</a>
+</header>
+
+@if (item(); as w) {
+  <article>
+    <section class="hero">
+      <p class="hero__meta">
+        <span class="badge"><i></i>{{ w.type === 'client' ? 'Live in production' : 'Live demo' }}</span>
+        <span>Case study</span>
+      </p>
+      <h1 class="hero__title">{{ w.name }}</h1>
+      <p class="hero__role gradient-text">{{ w.role }}</p>
+      <p class="hero__summary">{{ w.summary }}</p>
+      <div class="hero__actions">
+        @if (w.url) {
+          <a class="btn btn--primary" [href]="w.url" target="_blank" rel="noopener noreferrer">
+            Visit {{ w.domain }} <app-icon name="arrow" />
+          </a>
+        }
+        <a class="btn" routerLink="/work">Browse all work</a>
+      </div>
+    </section>
+
+    <app-work-preview class="shot" kind="site" [domain]="w.domain ?? ''" />
+
+    <div class="body">
+      <div class="body__main">
+        @if (w.context) {
+          <section class="block">
+            <h2><span>01</span> Context</h2>
+            <p>{{ w.context }}</p>
+          </section>
+        }
+        <section class="block">
+          <h2><span>{{ w.context ? '02' : '01' }}</span> What I do</h2>
+          <ol class="steps">
+            @for (h of w.highlights; track h; let i = $index) {
+              <li><b>{{ i + 1 }}</b><p>{{ h }}</p></li>
+            }
+          </ol>
+        </section>
+      </div>
+
+      <aside class="facts glass" aria-label="Project facts">
+        <dl>
+          @for (f of facts(); track f.label) {
+            <div>
+              <dt>{{ f.label }}</dt>
+              <dd>{{ f.value }}</dd>
+            </div>
+          }
+          @if (w.url) {
+            <div>
+              <dt>Website</dt>
+              <dd><a [href]="w.url" target="_blank" rel="noopener noreferrer">{{ w.domain }} ↗</a></dd>
+            </div>
+          }
+        </dl>
+        @if (w.tech.length) {
+          <p class="facts__label">Stack</p>
+          <ul class="facts__tech">
+            @for (t of w.tech; track t) {
+              <li class="chip">{{ t }}</li>
+            }
+          </ul>
+        }
+      </aside>
+    </div>
+
+    @if (neighbours(); as n) {
+      <nav class="pager" aria-label="More projects">
+        <a class="pager__link glass" [routerLink]="n.prev.route">
+          <small>← Previous</small>
+          <strong>{{ n.prev.name }}</strong>
+        </a>
+        <a class="pager__link pager__link--next glass" [routerLink]="n.next.route">
+          <small>Next →</small>
+          <strong>{{ n.next.name }}</strong>
+        </a>
+      </nav>
+    }
+  </article>
+} @else {
+  <section class="missing glass">
+    <h1>Project not found</h1>
+    <p>That project doesn't exist (or has moved).</p>
+    <a class="btn btn--primary" routerLink="/work">See all work</a>
+  </section>
+}
