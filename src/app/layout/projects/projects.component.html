@@ -2,6 +2,39 @@
   <p class="eyebrow" appReveal>Selected work</p>
   <h2 class="title" id="work-title" appReveal>Things I've <span class="gradient-text">built.</span></h2>
 
+  @for (client of clients; track client.url; let odd = $odd) {
+    <a class="client glass" [class.client--flip]="odd" [href]="client.url" target="_blank" rel="noopener noreferrer" appSpotlight appReveal>
+      <div class="browser" aria-hidden="true">
+        <div class="browser__bar">
+          <i></i><i></i><i></i>
+          <span class="browser__url">🔒 {{ client.domain }}</span>
+        </div>
+        <div class="browser__page">
+          <span class="browser__nav"></span>
+          <span class="browser__hero"></span>
+          <span class="browser__line"></span>
+          <span class="browser__line browser__line--short"></span>
+          <div class="browser__cards"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <div class="client__copy">
+        <p class="client__kicker"><span class="client__live"><i></i>Live in production</span> · {{ client.status }}</p>
+        <h3>{{ client.name }}</h3>
+        <p class="client__role gradient-text">{{ client.role }}</p>
+        <p class="card__text">{{ client.summary }}</p>
+        @if (client.stack) {
+          <ul class="card__stack">
+            @for (tech of client.stack; track tech) {
+              <li class="chip">{{ tech }}</li>
+            }
+          </ul>
+        }
+        <span class="card__cta">Visit {{ client.domain }} <app-icon name="arrow" /></span>
+      </div>
+    </a>
+  }
+
+  <p class="demos-label" appReveal>Live demos — built for this portfolio</p>
   <div class="grid">
     @for (project of projects; track project.route; let i = $index) {
       <a class="card glass" [routerLink]="project.route" appSpotlight [appReveal]="i * 90">
