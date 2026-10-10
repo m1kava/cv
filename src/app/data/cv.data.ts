@@ -86,6 +86,39 @@ export const EXPERIENCE: Experience[] = [
 
 export const SKILLS = ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Signals', 'JavaScript', 'HTML5', 'CSS3', 'SCSS', 'REST APIs', 'Git', 'GitLab', 'Jira'];
 
+export interface ClientProject {
+  name: string;
+  url: string;
+  domain: string;
+  role: string;
+  /** Short status line, e.g. "Current job". */
+  status: string;
+  summary: string;
+  stack?: string[];
+}
+
+/** Real production work, shown as the featured card above the demos. */
+export const CLIENT_PROJECTS: ClientProject[] = [
+  {
+    name: 'Crocobet',
+    url: 'https://crocobet.com/',
+    domain: 'crocobet.com',
+    role: 'Angular Developer · since 2021',
+    status: 'Current job',
+    summary:
+      'I work on the frontend of crocobet.com — a high-traffic betting platform where performance and reliability matter every second. Features, releases, reviews and mentoring.',
+    stack: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'SCSS'],
+  },
+  {
+    name: 'Prime Labs',
+    url: 'https://primelabs.ge/',
+    domain: 'primelabs.ge',
+    role: 'Frontend development',
+    status: 'Client work',
+    summary: 'I built the frontend of the Prime Labs website — the part every visitor sees and uses. It is live in production.',
+  },
+];
+
 export interface Project {
   name: string;
   route: string;
