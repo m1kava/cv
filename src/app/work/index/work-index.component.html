@@ -1,0 +1,117 @@
+<header class="top">
+  <a class="top__back" routerLink="/" fragment="work"><span aria-hidden="true">←</span> Back to portfolio</a>
+</header>
+
+<section class="hero">
+  <p class="eyebrow">Portfolio</p>
+  <h1 class="hero__title">All <span class="gradient-text">work.</span></h1>
+  <p class="hero__text">
+    Production sites I work on, plus interactive demos built for this portfolio. Filter by type or technology — the
+    URL updates as you go, so any view can be shared.
+  </p>
+  <dl class="stats">
+    @for (stat of stats; track stat.label) {
+      <div class="stat glass">
+        <dt>{{ stat.label }}</dt>
+        <dd class="gradient-text">{{ stat.value }}</dd>
+      </div>
+    }
+  </dl>
+</section>
+
+<section class="controls glass" aria-label="Filters">
+  <div class="controls__row">
+    <div class="seg" role="radiogroup" aria-label="Type">
+      @for (t of types; track t.id) {
+        <button type="button" role="radio" [attr.aria-checked]="type() === t.id" [class.on]="type() === t.id" (click)="type.set(t.id)">
+          {{ t.label }} <span>{{ counts()[t.id] }}</span>
+        </button>
+      }
+    </div>
+
+    <label class="search">
+      <span class="visually-hidden">Search projects</span>
+      <input
+        #search
+        type="search"
+        placeholder="Search projects…"
+        [value]="query()"
+        (input)="query.set($any($event.target).value)"
+      />
+      <kbd aria-hidden="true">/</kbd>
+    </label>
+
+    <label class="select">
+      <span>Sort</span>
+      <select [value]="sort()" (change)="sort.set($any($event.target).value)">
+        @for (s of sorts; track s.id) {
+          <option [value]="s.id">{{ s.label }}</option>
+        }
+      </select>
+    </label>
+
+    <div class="seg" role="radiogroup" aria-label="Layout">
+      <button type="button" role="radio" [attr.aria-checked]="view() === 'grid'" [class.on]="view() === 'grid'" (click)="view.set('grid')" aria-label="Grid view">▦</button>
+      <button type="button" role="radio" [attr.aria-checked]="view() === 'list'" [class.on]="view() === 'list'" (click)="view.set('list')" aria-label="List view">☰</button>
+    </div>
+  </div>
+
+  <div class="tech" role="group" aria-label="Filter by technology">
+    @for (t of allTech; track t) {
+      <button type="button" class="chip" [class.on]="tech().includes(t)" [attr.aria-pressed]="tech().includes(t)" (click)="toggleTech(t)">
+        {{ t }}
+      </button>
+    }
+  </div>
+</section>
+
+<p class="summary" aria-live="polite">
+  Showing <b>{{ results().length }}</b> of {{ stats[0].value }}
+  @if (filtered()) {
+    · <button type="button" class="link" (click)="clear()">Clear filters</button>
+  }
+</p>
+
+<ul class="results" [class.results--list]="view() === 'list'">
+  @for (item of results(); track item.slug; let i = $index) {
+    <li class="item glass" appSpotlight [style.animation-delay.ms]="i * 50">
+      <app-work-preview class="item__preview" [kind]="item.preview" [domain]="item.domain ?? ''" />
+      <div class="item__body">
+        <p class="item__meta">
+          <span class="badge" [class.badge--client]="item.type === 'client'">
+            @if (item.type === 'client') {
+              <i></i>
+            }
+            {{ item.status }}
+          </span>
+          @if (item.period) {
+            <span>{{ item.period }}</span>
+          }
+        </p>
+        <h2 class="item__name">
+          <a class="item__link" [routerLink]="item.route">{{ item.name }}</a>
+        </h2>
+        <p class="item__role">{{ item.role }}</p>
+        <p class="item__summary">{{ item.summary }}</p>
+        @if (item.tech.length) {
+          <ul class="item__tech" aria-label="Technologies">
+            @for (t of item.tech; track t) {
+              <li class="chip" [class.on]="tech().includes(t)">{{ t }}</li>
+            }
+          </ul>
+        }
+        <div class="item__actions">
+          <span class="item__cta">{{ item.type === 'client' ? 'Read case study' : 'Open live demo' }} <app-icon name="arrow" /></span>
+          @if (item.url) {
+            <a class="item__ext" [href]="item.url" target="_blank" rel="noopener noreferrer">{{ item.domain }} ↗</a>
+          }
+        </div>
+      </div>
+    </li>
+  } @empty {
+    <li class="empty glass">
+      <p>No projects match these filters.</p>
+      <button type="button" class="btn" (click)="clear()">Clear filters</button>
+    </li>
+  }
+</ul>
