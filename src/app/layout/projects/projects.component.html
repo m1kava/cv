@@ -1,0 +1,48 @@
+<section class="work" id="work" aria-labelledby="work-title">
+  <p class="eyebrow" appReveal>Selected work</p>
+  <h2 class="title" id="work-title" appReveal>Things I've <span class="gradient-text">built.</span></h2>
+
+  <div class="grid">
+    @for (project of projects; track project.route; let i = $index) {
+      <a class="card glass" [routerLink]="project.route" appSpotlight [appReveal]="i * 90">
+        <div class="preview" [class]="'preview preview--' + project.preview" aria-hidden="true">
+          @switch (project.preview) {
+            @case ('odds') {
+              @for (row of [0, 1, 2]; track row) {
+                <div class="odds-row">
+                  <i></i>
+                  @for (cell of [0, 1, 2]; track cell) {
+                    <b [style.animation-delay]="(row * 3 + cell) * 0.37 + 's'"></b>
+                  }
+                </div>
+              }
+            }
+            @case ('board') {
+              @for (col of [3, 2, 1]; track $index) {
+                <div class="board-col">
+                  @for (card of [].constructor(col); track $index) {
+                    <span></span>
+                  }
+                </div>
+              }
+            }
+            @case ('chart') {
+              @for (h of bars; track $index) {
+                <span class="bar" [class.down]="$index % 3 === 2" [style.height.%]="h"></span>
+              }
+            }
+          }
+        </div>
+        <p class="card__kicker">0{{ i + 1 }} · {{ project.kicker }}</p>
+        <h3>{{ project.name }}</h3>
+        <p class="card__text">{{ project.summary }}</p>
+        <ul class="card__stack">
+          @for (tech of project.stack; track tech) {
+            <li class="chip">{{ tech }}</li>
+          }
+        </ul>
+        <span class="card__cta">Open live demo <app-icon name="arrow" /></span>
+      </a>
+    }
+  </div>
+</section>

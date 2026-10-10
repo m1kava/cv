@@ -1,0 +1,281 @@
+:host {
+  display: block;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 10px;
+
+  input {
+    flex: 1 1 180px;
+    height: 40px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text);
+    font: 14px var(--font);
+  }
+}
+
+.tags {
+  display: flex;
+  gap: 4px;
+
+  button {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: none;
+    color: var(--text-muted);
+    font: 12px var(--font-mono);
+    text-transform: capitalize;
+    cursor: pointer;
+
+    &.on {
+      border-color: var(--cyan);
+      color: var(--text);
+    }
+  }
+}
+
+.progress {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.btn--small {
+  height: 38px;
+  padding: 0 14px;
+  font-size: 13px;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+  padding: 14px;
+  transition: border-color 0.2s, background 0.2s;
+
+  &.over {
+    border-color: var(--violet);
+    background: rgba(139, 92, 246, 0.06);
+  }
+}
+
+.column__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+
+  h3 {
+    margin: 0;
+    font: 600 16px var(--font-display);
+  }
+  span {
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .over-limit {
+    color: #fbbf24;
+  }
+}
+
+.warn {
+  margin: 0 0 10px;
+  color: #fbbf24;
+  font-size: 12px;
+}
+
+.cards {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  position: relative;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(15, 17, 28, 0.9);
+  cursor: grab;
+  transition: opacity 0.2s, transform 0.2s, border-color 0.2s;
+
+  &:hover {
+    border-color: var(--border-strong);
+
+    .card__actions {
+      opacity: 1;
+    }
+  }
+  &.dragging {
+    opacity: 0.35;
+  }
+  &.drop-before::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--gradient);
+  }
+}
+
+.badge {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font: 11px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tag-feature {
+  color: var(--cyan);
+  background: rgba(34, 211, 238, 0.12);
+}
+.tag-bug {
+  color: #fb7185;
+  background: rgba(251, 113, 133, 0.12);
+}
+.tag-chore {
+  color: #c4b5fd;
+  background: rgba(139, 92, 246, 0.14);
+}
+
+.card__title {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.card__edit {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--cyan);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--text);
+  font: 14px var(--font);
+}
+
+.card__actions {
+  display: flex;
+  gap: 4px;
+  margin-top: 10px;
+  opacity: 0.55;
+  transition: opacity 0.2s;
+
+  button {
+    width: 30px;
+    height: 28px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      border-color: var(--cyan);
+      color: var(--text);
+    }
+    &:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+  }
+}
+
+.placeholder {
+  padding: 20px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 14px;
+  color: var(--text-dim);
+  font-size: 13px;
+  text-align: center;
+}
+
+.add-btn {
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background: none;
+  color: var(--text-muted);
+  font: 13px var(--font);
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--cyan);
+    color: var(--text);
+  }
+}
+
+.add {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+
+  input,
+  select {
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.35);
+    color: var(--text);
+    font: 13px var(--font);
+  }
+}
+
+.add__row {
+  display: flex;
+  gap: 6px;
+
+  select {
+    flex: 1;
+    text-transform: capitalize;
+  }
+}
+
+.tip {
+  margin: 12px 0 0;
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+@media (hover: none) {
+  .card__actions {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,130 @@
+<app-work-page
+  kicker="Project 01 · Real-time"
+  [title]="page.title"
+  [description]="page.description"
+  [stack]="page.stack"
+  [points]="page.points"
+>
+  <div class="board">
+    <nav class="leagues glass" aria-label="Leagues">
+      <button type="button" [class.on]="league() === 'all'" (click)="league.set('all')">
+        All leagues <span>{{ feed.matches().length }}</span>
+      </button>
+      @for (l of leagues(); track l.name) {
+        <button type="button" [class.on]="league() === l.name" (click)="league.set(l.name)">
+          {{ l.name }} <span>{{ l.count }}</span>
+        </button>
+      }
+    </nav>
+
+    <div class="feed">
+      <div class="toolbar glass">
+        <input
+          type="search"
+          placeholder="Search teams…"
+          aria-label="Search teams"
+          [value]="query()"
+          (input)="query.set($any($event.target).value)"
+        />
+        <span class="status" [class.paused]="feed.paused()">
+          <i></i>{{ feed.paused() ? 'Paused' : 'Live' }} · {{ feed.rate() }} updates/s
+        </span>
+        <button type="button" class="btn btn--small" (click)="feed.paused.set(!feed.paused())">
+          {{ feed.paused() ? 'Resume feed' : 'Pause feed' }}
+        </button>
+      </div>
+
+      @for (group of groups(); track group.name) {
+        <section class="group glass" [attr.aria-label]="group.name">
+          <div class="row row--head">
+            <h3>{{ group.name }}</h3>
+            @for (o of outcomes; track o) {
+              <span>{{ label[o] }}</span>
+            }
+          </div>
+          @for (m of group.matches; track m.id) {
+            <div class="row" [class.suspended]="m.suspended" [class]="m.goals ? 'goal-' + (m.goals % 2) : ''">
+              <div class="match">
+                <span class="minute">{{ m.minute }}'</span>
+                <span class="teams">
+                  <span>{{ m.home }}</span><b>{{ m.score[0] }}</b>
+                  <span>{{ m.away }}</span><b>{{ m.score[1] }}</b>
+                </span>
+              </div>
+              @for (o of outcomes; track o) {
+                <button
+                  type="button"
+                  [class]="oddClass(m, o)"
+                  [class.picked]="isPicked(m.id, o)"
+                  [disabled]="m.suspended"
+                  [attr.aria-pressed]="isPicked(m.id, o)"
+                  [attr.aria-label]="m.home + ' vs ' + m.away + ', ' + label[o] + ' at ' + (m.odds[o] | number: '1.2-2')"
+                  (click)="toggle(m, o)"
+                >
+                  @if (m.suspended) {
+                    <span class="lock" aria-hidden="true">🔒</span>
+                  } @else {
+                    {{ m.odds[o] | number: '1.2-2' }}
+                  }
+                </button>
+              }
+            </div>
+          }
+        </section>
+      } @empty {
+        <p class="empty glass">No matches found.</p>
+      }
+    </div>
+
+    <aside class="slip glass" aria-label="Bet slip">
+      <h3>Bet slip <span>{{ lines().length }}</span></h3>
+
+      @for (line of lines(); track line.matchId) {
+        <div class="line" [class.changed]="line.changed" [class.suspended]="line.suspended">
+          <div>
+            <strong>{{ label[line.outcome] }} · {{ line.outcome === 'draw' ? 'Draw' : line.outcome === 'home' ? line.match.home : line.match.away }}</strong>
+            <small>{{ line.match.home }} – {{ line.match.away }}</small>
+          </div>
+          <span class="line__odds">
+            @if (line.changed) {
+              <s>{{ line.odds | number: '1.2-2' }}</s>
+            }
+            {{ line.live | number: '1.2-2' }}
+          </span>
+          <button type="button" class="line__x" aria-label="Remove selection" (click)="remove(line.matchId)">×</button>
+        </div>
+      } @empty {
+        <p class="hint">Tap any price to add it. Several picks make an accumulator.</p>
+      }
+
+      @if (lines().length) {
+        <label class="stake">
+          Stake (₾)
+          <input type="number" min="1" max="10000" [value]="stake()" (input)="setStake($any($event.target).value)" />
+        </label>
+        <dl class="totals">
+          <dt>Total odds</dt>
+          <dd>{{ totalOdds() | number: '1.2-2' }}</dd>
+          <dt>Potential return</dt>
+          <dd class="gradient-text">₾ {{ potentialReturn() | number: '1.2-2' }}</dd>
+        </dl>
+        @if (anyChanged()) {
+          <button type="button" class="btn btn--block" (click)="acceptChanges()">Accept new odds</button>
+        } @else {
+          <button type="button" class="btn btn--primary btn--block" [disabled]="!canPlace()" (click)="place()">Place bet</button>
+        }
+      }
+
+      @if (toast()) {
+        <p class="toast" role="status">{{ toast() }}</p>
+      }
+
+      @if (placed().length) {
+        <h4>My bets</h4>
+        @for (bet of placed(); track bet.id) {
+          <p class="placed">{{ bet.legs }}-fold · ₾{{ bet.stake }} &#64; {{ bet.odds | number: '1.2-2' }}</p>
+        }
+      }
+    </aside>
+  </div>
+</app-work-page>
