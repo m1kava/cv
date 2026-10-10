@@ -1,0 +1,77 @@
+<a class="back" routerLink="/kickoff">← {{ t('match.back') }}</a>
+
+@if (match(); as m) {
+  <section class="board" [class.live]="m.status === 'live'">
+    <p class="league">{{ m.league }}</p>
+    <div class="score">
+      <h1 class="team">{{ m.home }}</h1>
+      <div class="result">
+        @if (m.status === 'upcoming') {
+          <span class="vs">VS</span>
+          <small>{{ t('match.startsIn', { t: startsIn() }) }}</small>
+        } @else {
+          <span class="digits">{{ m.score[0] }}<i>:</i>{{ m.score[1] }}</span>
+          <small [class.live]="m.status === 'live'">
+            @if (m.status === 'live') {
+              <b></b>{{ t('match.live') }} · {{ m.minute | number: '1.0-0' }}'
+            } @else {
+              {{ t('event.fulltime') }}
+            }
+          </small>
+        }
+      </div>
+      <h1 class="team team--away">{{ m.away }}</h1>
+    </div>
+    <div class="bar" aria-hidden="true"><span [style.width.%]="progress()"></span></div>
+    @if (m.suspended) {
+      <p class="susp">⏳ {{ t('suspended') }}</p>
+    }
+  </section>
+
+  <div class="grid">
+    <section class="markets" [attr.aria-label]="t('match.markets')">
+      @for (def of defs; track def.id; let i = $index) {
+        <article class="market">
+          <h2>{{ t(def.name) }}</h2>
+          <div class="outcomes" [style.--n]="def.outcomes.length">
+            @for (o of m.markets[i].outcomes; track o.id) {
+              <ko-odds [match]="m" [marketId]="def.id" [outcome]="o" [showLabel]="true" [wide]="true" />
+            }
+          </div>
+        </article>
+      }
+    </section>
+
+    <aside class="side">
+      <section class="panel" [attr.aria-label]="t('match.stats')">
+        <h2>{{ t('match.stats') }}</h2>
+        @for (s of stats(); track s.label) {
+          <div class="stat">
+            <span>{{ s.home }}</span>
+            <small>{{ s.label }}</small>
+            <span>{{ s.away }}</span>
+            <div class="stat__bar"><i [style.width.%]="s.share"></i></div>
+          </div>
+        }
+      </section>
+
+      <section class="panel" [attr.aria-label]="t('match.timeline')">
+        <h2>{{ t('match.timeline') }}</h2>
+        <ol class="timeline">
+          @for (e of events(); track $index) {
+            <li [class.away]="e.side === 'away'" [class.center]="!e.side">
+              <span class="min">{{ e.minute }}'</span>
+              <span class="ev">{{ icon[e.kind] }} {{ t('event.' + e.kind) }}
+                @if (e.side) {
+                  · {{ e.side === 'home' ? m.home : m.away }}
+                }
+              </span>
+            </li>
+          }
+        </ol>
+      </section>
+    </aside>
+  </div>
+} @else {
+  <p class="gone">{{ t('match.notFound') }}</p>
+}

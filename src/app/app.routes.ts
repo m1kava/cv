@@ -8,6 +8,10 @@ export const routes: Routes = [
     title: 'Vladimer Mikava — Software Engineer · Angular Developer',
   },
   {
+    path: 'kickoff',
+    loadChildren: () => import('./kickoff/kickoff.routes').then((m) => m.KICKOFF_ROUTES),
+  },
+  {
     path: 'work',
     loadComponent: () => import('./work/index/work-index.component').then((m) => m.WorkIndexComponent),
     title: 'All work — Vladimer Mikava',
